@@ -306,6 +306,7 @@
       transition: transform 0.25s ease;
       cursor: pointer;
       animation: donqui-float 3s ease-in-out infinite;
+      mix-blend-mode: multiply;
     }
     @keyframes donqui-float {
       0%, 100% { transform: translateY(0px); }
@@ -334,9 +335,37 @@
       .donqui-img { width: 80px; }
       .donqui-bubble { max-width: 170px; font-size: 0.75rem; }
     }
+
+    /* ── DECO ESQUINAS ── */
+    .deco {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .deco-tl { top: 70px; left: -30px; }
+    .deco-br { bottom: 30px; right: -30px; }
+    .sq {
+      position: absolute;
+      border-radius: 12px;
+      opacity: 0.13;
+    }
+    .deco-tl .sq:nth-child(1) { width:80px;  height:80px;  background:var(--navy);  top:0;    left:0;    transform: rotate(18deg); }
+    .deco-tl .sq:nth-child(2) { width:50px;  height:50px;  background:var(--green); top:55px; left:65px; transform: rotate(-10deg); }
+    .deco-tl .sq:nth-child(3) { width:36px;  height:36px;  background:var(--orange);top:100px;left:8px;  transform: rotate(30deg); }
+    .deco-br .sq:nth-child(1) { width:90px;  height:90px;  background:var(--blue);  bottom:0;   right:0;   transform: rotate(-15deg); }
+    .deco-br .sq:nth-child(2) { width:55px;  height:55px;  background:var(--green); bottom:65px;right:75px;transform: rotate(20deg); }
+    .deco-br .sq:nth-child(3) { width:34px;  height:34px;  background:var(--orange);bottom:110px;right:18px;transform: rotate(-8deg); }
   </style>
 </head>
 <body>
+
+  <!-- ── DECO ── -->
+  <div class="deco deco-tl">
+    <div class="sq"></div><div class="sq"></div><div class="sq"></div>
+  </div>
+  <div class="deco deco-br">
+    <div class="sq"></div><div class="sq"></div><div class="sq"></div>
+  </div>
 
   <!-- ── HEADER ── -->
   <header>
