@@ -505,51 +505,10 @@
       loadReports();
     }
 
-   function loadReports() {
+    function loadReports() {
       const grid = document.getElementById('reports-grid');
-      grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando denuncias desde el servidor...</p></div>';
+      grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando denuncias...</p></div>';
 
-      const sheetURL = 'https://script.google.com/macros/s/AKfycby0CiKfUhLznoZ1YRAKkpF_iPjwKYDPxteXYr3kLcmc8qLaSHDxToWFQNIX46156P0/exec';
-
-      fetch(sheetURL)
-        .then(response => response.json())
-        .then(denuncias => {
-          if (!denuncias || denuncias.length === 0) {
-            grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
-            return;
-          }
-
-          // Invertir para mostrar las más recientes primero
-          const sorted = denuncias.reverse();
-
-          grid.innerHTML = sorted.map(r => {
-            let fecha = new Date(r.fecha).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' });
-            const statusClass = r.estado === 'Resuelto' ? 'resuelto' : r.estado === 'En progreso' ? 'en-progreso' : '';
-            
-            return `
-              <div class="report-card">
-                <div class="report-header">
-                  <span class="report-id">#${r.id}</span>
-                  <span class="report-status ${statusClass}">${r.estado}</span>
-                </div>
-                <div class="report-motivo">${r.motivo}</div>
-                <div class="report-categoria">📌 ${r.categoria}</div>
-                <div class="report-meta">📍 ${r.lugar} · 📅 ${fecha}</div>
-                <div class="report-desc">${r.descripcion}</div>
-                <div class="report-actions">
-                  <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Pendiente')">Pendiente</button>
-                  <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'En progreso')">Progreso</button>
-                  <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Resuelto')">Resuelto</button>
-                </div>
-              </div>
-            `;
-          }).join('');
-        })
-        .catch(err => {
-          console.error('Error al cargar denuncias:', err);
-          grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p>Error de conexión al servidor.</p></div>';
-        });
-    }
       // Leer desde Google Sheets a través de Apps Script
       fetch('https://script.google.com/macros/s/AKfycbycvBNcTK-_UCJT8I1-vfFtn4CLeflCrat6sR3C0ENgJ1rKffB-YSPLlR_vVA6CIvpB/exec')
         .then(response => response.json())

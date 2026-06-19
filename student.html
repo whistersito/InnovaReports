@@ -908,35 +908,6 @@
       lista.unshift(denuncia);
       saveDenuncias(lista);
 
-      // 1. Enviar a Formspree (Respaldo)
-      fetch('https://formspree.io/f/mbdenjzo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(denuncia)
-      }).catch(err => console.log('Formspree sync:', err));
-
-      // 2. Enviar a Google Sheets
-      const sheetURL = 'https://script.google.com/macros/s/AKfycby0CiKfUhLznoZ1YRAKkpF_iPjwKYDPxteXYr3kLcmc8qLaSHDxToWFQNIX46156P0/exec'; 
-
-      fetch(sheetURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(denuncia)
-      }).then(() => {
-        console.log("Enviado a Sheets correctamente");
-      }).catch(err => console.log('Error Sheets sync:', err));
-
-      document.querySelectorAll('.report-step').forEach(s => s.classList.remove('active'));
-      document.getElementById('step-indicator').style.display = 'none';
-      document.getElementById('success-screen').classList.add('active');
-      document.getElementById('success-code').textContent = 'N.º de seguimiento: ' + code;
-    }
-
-      const lista = getDenuncias();
-      lista.unshift(denuncia);
-      saveDenuncias(lista);
-
       // Enviar a Formspree
       fetch('https://formspree.io/f/mbdenjzo', {
         method: 'POST',
