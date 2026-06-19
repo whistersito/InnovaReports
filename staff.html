@@ -510,7 +510,7 @@
       grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando denuncias...</p></div>';
 
       // Leer desde Google Sheets a través de Apps Script
-      fetch('https://script.google.com/macros/s/AKfycbycvBNcTK-_UCJT8I1-vfFtn4CLeflCrat6sR3C0ENgJ1rKffB-YSPLlR_vVA6CIvpB/exec')
+      fetch('https://script.google.com/macros/s/AKfycbx3SLSq4rx9TEtNiHcSBXaQfRwHggNDbNpRSWScA5tF4oB_89UKauvCiwLssnjwLQ0f/exec')
         .then(response => response.json())
         .then(denuncias => {
           if (!denuncias || denuncias.length === 0) {
