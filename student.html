@@ -355,6 +355,209 @@
     .deco-br .sq:nth-child(1) { width:90px;  height:90px;  background:var(--blue);  bottom:0;   right:0;   transform: rotate(-15deg); }
     .deco-br .sq:nth-child(2) { width:55px;  height:55px;  background:var(--green); bottom:65px;right:75px;transform: rotate(20deg); }
     .deco-br .sq:nth-child(3) { width:34px;  height:34px;  background:var(--orange);bottom:110px;right:18px;transform: rotate(-8deg); }
+
+    /* ══════════════════════════════
+       FORMULARIO DE DENUNCIAS
+    ══════════════════════════════ */
+    .panel.panel-scroll {
+      align-items: flex-start;
+      justify-content: flex-start;
+      overflow-y: auto;
+      font-size: 1rem;
+      font-weight: 400;
+      color: inherit;
+    }
+
+    .report-form-wrap {
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+      text-align: left;
+    }
+
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 22px;
+    }
+    .step-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #D7DEE9;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .step-dot.active { background: var(--green); transform: scale(1.35); }
+    .step-dot.done   { background: var(--navy); }
+
+    .report-step { display: none; flex-direction: column; gap: 16px; animation: step-in 0.3s ease both; }
+    .report-step.active { display: flex; }
+    @keyframes step-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .report-question {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 1.35rem;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+    .report-question .light { font-weight: 700; font-size: 0.92rem; color: var(--gray); }
+    .report-hint { font-size: 0.85rem; color: var(--gray); margin-top: -10px; }
+
+    .option-grid { display: flex; flex-direction: column; gap: 11px; margin-top: 4px; }
+    .option-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--white);
+      border: 2px solid #E2E8F0;
+      border-radius: 14px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+    .option-card:hover { border-color: var(--green); }
+    .option-card:active { transform: scale(0.99); }
+    .option-card.selected { border-color: var(--green); background: #F2FAEA; }
+    .option-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1.2; }
+    .option-title { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.96rem; color: var(--navy); }
+    .option-desc { font-size: 0.78rem; color: var(--gray); margin-top: 2px; }
+
+    .otro-input-wrap { display: none; margin-top: 4px; }
+    .otro-input-wrap.show { display: block; }
+
+    input[type="text"].field, textarea.field {
+      width: 100%;
+      border: 2px solid #E2E8F0;
+      border-radius: 12px;
+      padding: 13px 15px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.93rem;
+      color: var(--navy);
+      outline: none;
+      transition: border-color 0.15s;
+      background: var(--white);
+    }
+    input[type="text"].field:focus, textarea.field:focus { border-color: var(--green); }
+    textarea.field { resize: vertical; min-height: 130px; line-height: 1.55; }
+
+    .step-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .btn {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 11px 24px;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, opacity 0.15s, transform 0.1s;
+    }
+    .btn-primary { background: var(--navy); color: #fff; }
+    .btn-primary:hover:not(:disabled) { background: var(--green); }
+    .btn-primary:active:not(:disabled) { transform: scale(0.97); }
+    .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-ghost { background: none; color: var(--gray); padding: 11px 12px; }
+    .btn-ghost:hover { color: var(--navy); }
+
+    /* Pantalla de éxito */
+    .success-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 8px;
+      padding: 56px 24px;
+    }
+    .success-screen.active { display: flex; animation: step-in 0.4s ease both; }
+    .success-icon {
+      font-size: 3rem;
+      width: 84px; height: 84px;
+      border-radius: 50%;
+      background: #EBF5E0;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 6px;
+    }
+    .success-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--navy);
+      letter-spacing: -0.3px;
+    }
+    .success-sub {
+      font-size: 1.02rem;
+      color: var(--green);
+      font-weight: 800;
+      font-family: 'Nunito', sans-serif;
+    }
+    .success-code {
+      font-size: 0.78rem;
+      color: var(--gray);
+      background: var(--light);
+      padding: 6px 16px;
+      border-radius: 99px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    .success-actions { margin-top: 22px; }
+
+    /* ══════════════════════════════
+       PANEL ESTADO
+    ══════════════════════════════ */
+    .estado-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 15px 18px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 12px rgba(26,58,107,0.07);
+      border-left: 4px solid var(--orange);
+    }
+    .estado-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 5px;
+    }
+    .estado-motivo {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      color: var(--navy);
+      font-size: 0.95rem;
+    }
+    .estado-badge {
+      font-size: 0.66rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 11px;
+      border-radius: 99px;
+      background: #FEF3E0;
+      color: #92400E;
+      flex-shrink: 0;
+    }
+    .estado-meta {
+      font-size: 0.78rem;
+      color: var(--gray);
+    }
+    .estado-empty {
+      color: var(--gray);
+      font-size: 0.92rem;
+      text-align: center;
+      padding: 50px 20px;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -417,8 +620,97 @@
       </div>
 
       <!-- Panel Denuncias -->
-      <div class="panel" id="panel-denuncias">
-        prueba
+      <div class="panel panel-scroll" id="panel-denuncias">
+        <div class="report-form-wrap">
+
+          <div class="step-indicator" id="step-indicator">
+            <span class="step-dot active" data-step="1"></span>
+            <span class="step-dot" data-step="2"></span>
+            <span class="step-dot" data-step="3"></span>
+          </div>
+
+          <!-- PASO 1: Motivo -->
+          <div class="report-step active" id="step-1">
+            <p class="report-question">¿Cuál es el motivo de tu denuncia?</p>
+            <p class="report-hint">Selecciona la opción que mejor describa tu situación.</p>
+
+            <div class="option-grid">
+              <div class="option-card" data-motivo="Estudiante" onclick="selectMotivo(this)">
+                <span class="option-icon">🧑‍🎓</span>
+                <div>
+                  <div class="option-title">Estudiante</div>
+                  <div class="option-desc">Ej: Bullying o molestias con un compañero</div>
+                </div>
+              </div>
+              <div class="option-card" data-motivo="Profesor" onclick="selectMotivo(this)">
+                <span class="option-icon">👨‍🏫</span>
+                <div>
+                  <div class="option-title">Profesor</div>
+                  <div class="option-desc">Ej: Comportamiento indebido o extraño</div>
+                </div>
+              </div>
+              <div class="option-card" data-motivo="Convivencia" onclick="selectMotivo(this)">
+                <span class="option-icon">🏫</span>
+                <div>
+                  <div class="option-title">Convivencia</div>
+                  <div class="option-desc">Ej: Ruido molesto en tu aula</div>
+                </div>
+              </div>
+              <div class="option-card" data-motivo="Otro" onclick="selectMotivo(this)">
+                <span class="option-icon">✏️</span>
+                <div>
+                  <div class="option-title">Otro</div>
+                  <div class="option-desc">Cuéntanos qué deseas denunciar</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="otro-input-wrap" id="otro-input-wrap">
+              <input type="text" class="field" id="otro-input" placeholder="Escribe el motivo de tu denuncia..." oninput="validateStep1()">
+            </div>
+
+            <div class="step-actions">
+              <span></span>
+              <button class="btn btn-primary" id="btn-step1-next" onclick="goStep(2)" disabled>Continuar →</button>
+            </div>
+          </div>
+
+          <!-- PASO 2: Lugar -->
+          <div class="report-step" id="step-2">
+            <p class="report-question">¿Dónde ocurrió? <span class="light">(Sé específico)</span></p>
+            <p class="report-hint">Ej: Salón 302, patio principal, cancha de fútbol...</p>
+            <input type="text" class="field" id="lugar-input" placeholder="Escribe el lugar..." oninput="validateStep2()">
+
+            <div class="step-actions">
+              <button class="btn btn-ghost" onclick="goStep(1)">← Atrás</button>
+              <button class="btn btn-primary" id="btn-step2-next" onclick="goStep(3)" disabled>Continuar →</button>
+            </div>
+          </div>
+
+          <!-- PASO 3: Descripción -->
+          <div class="report-step" id="step-3">
+            <p class="report-question">¿Qué ocurrió? <span class="light">(Cuéntanos todo)</span></p>
+            <p class="report-hint">Brinda todos los detalles que puedas. Tu identidad permanece anónima.</p>
+            <textarea class="field" id="descripcion-input" placeholder="Escribe aquí lo que ocurrió..." oninput="validateStep3()"></textarea>
+
+            <div class="step-actions">
+              <button class="btn btn-ghost" onclick="goStep(2)">← Atrás</button>
+              <button class="btn btn-primary" id="btn-submit" onclick="submitDenuncia()" disabled>Enviar ✓</button>
+            </div>
+          </div>
+
+          <!-- PANTALLA DE ÉXITO -->
+          <div class="success-screen" id="success-screen">
+            <div class="success-icon">✅</div>
+            <p class="success-title">TU DENUNCIA FUE ENVIADA</p>
+            <p class="success-sub">Gracias por denunciar</p>
+            <p class="success-code" id="success-code"></p>
+            <div class="success-actions">
+              <button class="btn btn-primary" onclick="resetDenunciaForm()">Enviar otra denuncia</button>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <!-- Panel Reportes -->
@@ -427,8 +719,12 @@
       </div>
 
       <!-- Panel Estado -->
-      <div class="panel" id="panel-estado">
-        Aquí están las Denuncias/Reportes que enviaste y su estado
+      <div class="panel panel-scroll" id="panel-estado">
+        <div class="report-form-wrap">
+          <p class="report-question" style="margin-bottom:2px;">Tus Denuncias y Reportes</p>
+          <p class="report-hint" style="margin-bottom:20px;">Aquí están las denuncias/reportes que enviaste y su estado.</p>
+          <div id="estado-list"></div>
+        </div>
       </div>
 
     </div>
@@ -464,6 +760,9 @@
       document.querySelectorAll('.nav-item.active .nav-dot').forEach(d => {
         d.style.background = '#6AB42B';
       });
+
+      if (name === 'estado') renderEstado();
+      if (name === 'denuncias') showDonquiDenunciasGuide();
     }
 
     // Por defecto mostrar bienvenida sin resaltar nada
@@ -475,7 +774,6 @@
       '¡Adelante, sin dudar! La justicia te acompaña. ⚔️',
       '¿Tienes dudas? ¡No te rindas, aquí estoy yo! 💪',
       'Recuerda: reportar es un acto de valentía. 🌟',
-      '¿Te parece que con el silencio pondrán papel en los baños?,¡REPORTALO AHORA!',
       '¡El que no denuncia, consiente! — Don Quixote dixit. 📜',
       '¡Yo luché contra molinos de viento, tú puedes con esto! 🌀',
       'La cobardía es el único pecado que no tiene perdón. ¡Reporta! 🔥',
@@ -485,7 +783,7 @@
       '¿Ves algo malo? ¡Dilo! Yo te cubro las espaldas. 🧢',
       '¡Nada de titubear! Los héroes actúan, no se quedan callados. 🦸',
       'Cada denuncia es un paso hacia una escuela mejor. 🏫✨',
-      'Ese tal Thiago Diaz me cae muy bien 😃',
+      '¡Oye! Sí, tú. ¿Vas a quedarte callado? ¡Yo no creo! 😤',
       'En Innova Reports, tu voz tiene poder. Úsalo. 📢',
       'Lo que no se reporta, no se arregla. Simple lógica. 🧠',
       '¡Juntos hacemos de Innova un lugar épico! 🚀',
@@ -504,6 +802,158 @@
       void bubble.offsetWidth;
       bubble.style.animation = '';
     });
+
+    // ════════════════════════════════════
+    // GUÍA DE DON QUIXOTE PARA DENUNCIAS
+    // (Estilo Limbus Company — dramático y caballeresco)
+    // ════════════════════════════════════
+    function showDonquiDenunciasGuide() {
+      bubble.style.display = '';
+      bubble.innerHTML = `
+        <button class="bubble-close" onclick="document.getElementById('donqui-bubble').style.display='none'" title="Cerrar">✕</button>
+        ¡Escúchame bien, escudero! ⚔️ Tres pasos hay en este sendero de la verdad:<br>
+        <strong>1.</strong> Declara la naturaleza de tu queja.<br>
+        <strong>2.</strong> Señala el lugar donde ocurrió la injusticia.<br>
+        <strong>3.</strong> Narra los hechos sin temor.<br>
+        ¡Yo, Don Quixote, seré tu testigo! 🛡️
+      `;
+      bubble.style.animation = 'none';
+      void bubble.offsetWidth;
+      bubble.style.animation = '';
+    }
+
+    // ════════════════════════════════════
+    // FORMULARIO DE DENUNCIAS — lógica
+    // ════════════════════════════════════
+    let reportState = { motivo: null, motivoDetalle: '', lugar: '', descripcion: '' };
+
+    function selectMotivo(el) {
+      document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      reportState.motivo = el.dataset.motivo;
+
+      const otroWrap = document.getElementById('otro-input-wrap');
+      if (reportState.motivo === 'Otro') {
+        otroWrap.classList.add('show');
+      } else {
+        otroWrap.classList.remove('show');
+        document.getElementById('otro-input').value = '';
+      }
+      validateStep1();
+    }
+
+    function validateStep1() {
+      const btn = document.getElementById('btn-step1-next');
+      if (!reportState.motivo) { btn.disabled = true; return; }
+      if (reportState.motivo === 'Otro') {
+        const val = document.getElementById('otro-input').value.trim();
+        reportState.motivoDetalle = val;
+        btn.disabled = val.length === 0;
+      } else {
+        btn.disabled = false;
+      }
+    }
+
+    function validateStep2() {
+      const val = document.getElementById('lugar-input').value.trim();
+      reportState.lugar = val;
+      document.getElementById('btn-step2-next').disabled = val.length === 0;
+    }
+
+    function validateStep3() {
+      const val = document.getElementById('descripcion-input').value.trim();
+      reportState.descripcion = val;
+      document.getElementById('btn-submit').disabled = val.length < 5;
+    }
+
+    function goStep(n) {
+      document.querySelectorAll('.report-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step-' + n).classList.add('active');
+      document.querySelectorAll('.step-dot').forEach(d => {
+        const ds = parseInt(d.dataset.step);
+        d.classList.toggle('active', ds === n);
+        d.classList.toggle('done', ds < n);
+      });
+    }
+
+    function generateCode() {
+      return 'IR-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    }
+
+    // Almacenamiento local (por navegador) — placeholder hasta conectar backend real
+    function getDenuncias() {
+      try {
+        return JSON.parse(localStorage.getItem('innovaReportsDenuncias') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+    function saveDenuncias(lista) {
+      localStorage.setItem('innovaReportsDenuncias', JSON.stringify(lista));
+    }
+
+    function submitDenuncia() {
+      const code = generateCode();
+      const denuncia = {
+        id: code,
+        motivo: reportState.motivo === 'Otro' ? reportState.motivoDetalle : reportState.motivo,
+        categoria: reportState.motivo,
+        lugar: reportState.lugar,
+        descripcion: reportState.descripcion,
+        fecha: new Date().toISOString(),
+        estado: 'Pendiente'
+      };
+
+      const lista = getDenuncias();
+      lista.unshift(denuncia);
+      saveDenuncias(lista);
+
+      document.querySelectorAll('.report-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step-indicator').style.display = 'none';
+      document.getElementById('success-screen').classList.add('active');
+      document.getElementById('success-code').textContent = 'N.º de seguimiento: ' + code;
+    }
+
+    function resetDenunciaForm() {
+      reportState = { motivo: null, motivoDetalle: '', lugar: '', descripcion: '' };
+      document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      document.getElementById('otro-input').value = '';
+      document.getElementById('otro-input-wrap').classList.remove('show');
+      document.getElementById('lugar-input').value = '';
+      document.getElementById('descripcion-input').value = '';
+      document.getElementById('btn-step1-next').disabled = true;
+      document.getElementById('btn-step2-next').disabled = true;
+      document.getElementById('btn-submit').disabled = true;
+      document.getElementById('success-screen').classList.remove('active');
+      document.getElementById('step-indicator').style.display = 'flex';
+      goStep(1);
+    }
+
+    // ════════════════════════════════════
+    // PANEL ESTADO — lista de denuncias enviadas
+    // ════════════════════════════════════
+    function renderEstado() {
+      const wrap = document.getElementById('estado-list');
+      const lista = getDenuncias();
+
+      if (lista.length === 0) {
+        wrap.innerHTML = '<p class="estado-empty">Aún no has enviado ninguna denuncia o reporte. 📭<br>Cuando envíes uno, aparecerá aquí junto a su estado.</p>';
+        return;
+      }
+
+      wrap.innerHTML = lista.map(d => {
+        const fecha = new Date(d.fecha).toLocaleDateString('es-PE', { day: '2-digit', month: 'short', year: 'numeric' });
+        return `
+          <div class="estado-card">
+            <div class="estado-top">
+              <span class="estado-motivo">${d.motivo}</span>
+              <span class="estado-badge">${d.estado}</span>
+            </div>
+            <div class="estado-meta">📍 ${d.lugar} · 🗓️ ${fecha} · #${d.id}</div>
+          </div>
+        `;
+      }).join('');
+    }
   </script>
 
 </body>
