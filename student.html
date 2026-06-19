@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Innova Reports – Estudiante</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Inter:wght@400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #F2F5FA;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      text-align: center;
+      padding: 24px;
+      overflow: hidden;
+    }
+
+    /* ── EXCAVADORA ── */
+    .machine-wrap {
+      position: relative;
+      width: 180px;
+      height: 160px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Cuerpo principal */
+    .body {
+      position: absolute;
+      bottom: 28px;
+      left: 40px;
+      width: 100px;
+      height: 56px;
+      background: #E3A000;
+      border-radius: 8px 8px 4px 4px;
+    }
+
+    /* Cabina */
+    .cabin {
+      position: absolute;
+      bottom: 72px;
+      left: 64px;
+      width: 60px;
+      height: 40px;
+      background: #F5B800;
+      border-radius: 6px 6px 0 0;
+    }
+    .cabin::before {
+      content: '';
+      position: absolute;
+      top: 6px; left: 8px;
+      width: 20px; height: 14px;
+      background: #B8E0F7;
+      border-radius: 3px;
+      opacity: 0.85;
+    }
+    .cabin::after {
+      content: '';
+      position: absolute;
+      top: 6px; right: 8px;
+      width: 14px; height: 14px;
+      background: #B8E0F7;
+      border-radius: 3px;
+      opacity: 0.85;
+    }
+
+    /* Orugas */
+    .tracks {
+      position: absolute;
+      bottom: 0;
+      left: 28px;
+      width: 124px;
+      height: 28px;
+      background: #555;
+      border-radius: 14px;
+    }
+    .tracks::before, .tracks::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      width: 14px; height: 14px;
+      background: #888;
+      border-radius: 50%;
+    }
+    .tracks::before { left: 8px; }
+    .tracks::after  { right: 8px; }
+
+    /* Ruedas intermedias */
+    .wheel {
+      position: absolute;
+      bottom: 6px;
+      width: 14px; height: 14px;
+      background: #888;
+      border-radius: 50%;
+    }
+    .wheel-1 { left: 60px; }
+    .wheel-2 { left: 90px; }
+    .wheel-3 { left: 116px; }
+
+    /* ── BRAZO (animado) ── */
+    .arm-group {
+      position: absolute;
+      bottom: 76px;
+      left: 20px;
+      transform-origin: right bottom;
+      animation: arm-swing 1.8s ease-in-out infinite;
+    }
+    @keyframes arm-swing {
+      0%   { transform: rotate(0deg); }
+      40%  { transform: rotate(-28deg); }
+      60%  { transform: rotate(-28deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .arm {
+      width: 68px;
+      height: 10px;
+      background: #C47C00;
+      border-radius: 5px;
+      position: relative;
+    }
+
+    /* Cucharón */
+    .bucket {
+      position: absolute;
+      left: -16px;
+      top: -6px;
+      width: 22px;
+      height: 18px;
+      background: #A06000;
+      border-radius: 0 0 10px 10px;
+      transform: rotate(20deg);
+    }
+    .bucket::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 2px;
+      width: 18px;
+      height: 8px;
+      background: #7A4800;
+      border-radius: 0 0 6px 6px;
+    }
+
+    /* ── TIERRA VOLANDO ── */
+    .dirt {
+      position: absolute;
+      border-radius: 50%;
+      background: #8B6340;
+      animation: dirt-fly 1.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .dirt-1 { width:8px; height:8px; bottom:110px; left:14px; animation-delay:0.4s; }
+    .dirt-2 { width:5px; height:5px; bottom:118px; left:6px;  animation-delay:0.55s; }
+    .dirt-3 { width:6px; height:6px; bottom:105px; left:24px; animation-delay:0.48s; }
+    @keyframes dirt-fly {
+      0%,35% { opacity:0; transform: translate(0,0) scale(1); }
+      50%     { opacity:1; }
+      100%    { opacity:0; transform: translate(-18px,-28px) scale(0.4); }
+    }
+
+    /* ── TEXTO ── */
+    h1 {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 1.9rem;
+      color: #003087;
+      margin-top: 8px;
+    }
+    .tag {
+      display: inline-block;
+      background: #FEF3C7;
+      color: #92400E;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      border: 1px solid #FDE68A;
+    }
+    p {
+      color: #6B7280;
+      font-size: 0.95rem;
+      max-width: 280px;
+      line-height: 1.5;
+    }
+
+    /* ── BOTÓN ── */
+    a.back {
+      margin-top: 4px;
+      display: inline-block;
+      padding: 10px 26px;
+      background: #003087;
+      color: #fff;
+      border-radius: 10px;
+      text-decoration: none;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: background 0.15s;
+    }
+    a.back:hover { background: #E3000F; }
+
+    /* ── CLICK WOBBLE ── */
+    .machine-wrap.shake {
+      animation: wobble 0.5s ease;
+    }
+    @keyframes wobble {
+      0%   { transform: rotate(0deg); }
+      20%  { transform: rotate(-6deg) scale(1.08); }
+      50%  { transform: rotate(5deg) scale(1.05); }
+      80%  { transform: rotate(-3deg); }
+      100% { transform: rotate(0deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="machine-wrap" id="machine" title="¡Tócame!">
+    <!-- orugas -->
+    <div class="tracks"></div>
+    <div class="wheel wheel-1"></div>
+    <div class="wheel wheel-2"></div>
+    <div class="wheel wheel-3"></div>
+    <!-- cuerpo -->
+    <div class="body"></div>
+    <!-- cabina -->
+    <div class="cabin"></div>
+    <!-- brazo + cucharón -->
+    <div class="arm-group">
+      <div class="arm">
+        <div class="bucket"></div>
+      </div>
+    </div>
+    <!-- tierra -->
+    <div class="dirt dirt-1"></div>
+    <div class="dirt dirt-2"></div>
+    <div class="dirt dirt-3"></div>
+  </div>
+
+  <span class="tag">🚧 Bajo construcción</span>
+  <h1>¡Volvemos pronto!</h1>
+  <p>Estamos construyendo tu espacio seguro para reportar. Paciencia, que llegamos rápido. 🦺</p>
+  <a href="index.html" class="back">← Volver al inicio</a>
+
+  <script>
+    const machine = document.getElementById('machine');
+    machine.addEventListener('click', () => {
+      machine.classList.remove('shake');
+      void machine.offsetWidth; // reflow para reiniciar
+      machine.classList.add('shake');
+    });
+    machine.addEventListener('animationend', () => {
+      machine.classList.remove('shake');
+    });
+  </script>
+
+</body>
+</html>
