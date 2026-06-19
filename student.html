@@ -363,12 +363,16 @@
 
         <button class="nav-item active" onclick="showPanel('welcome')" id="btn-welcome" style="display:none"></button>
 
-        <button class="nav-item active" onclick="showPanel('denuncias')" id="btn-denuncias">
+        <button class="nav-item" onclick="showPanel('denuncias')" id="btn-denuncias">
           <span class="nav-dot"></span> Denuncias
         </button>
 
         <button class="nav-item" onclick="showPanel('reportes')" id="btn-reportes">
           <span class="nav-dot"></span> Reportes
+        </button>
+
+        <button class="nav-item" onclick="showPanel('estado')" id="btn-estado">
+          <span class="nav-dot"></span> Estado
         </button>
       </div>
     </nav>
@@ -391,6 +395,11 @@
       <!-- Panel Reportes -->
       <div class="panel" id="panel-reportes">
         prueba
+      </div>
+
+      <!-- Panel Estado -->
+      <div class="panel" id="panel-estado">
+        Aquí están las Denuncias/Reportes que enviaste y su estado
       </div>
 
     </div>
