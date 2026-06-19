@@ -908,12 +908,12 @@
       lista.unshift(denuncia);
       saveDenuncias(lista);
 
-      // Enviar a Google Apps Script
-      fetch('https://script.google.com/macros/s/AKfycbwqZGGBx08-XiE_TIf9-NsYUGMROKW2S3YdIBSOvA7rcf6FrJ1uHp3hlwkNjS_8bVjm/exec', {
+      // Enviar a Formspree
+      fetch('https://formspree.io/f/mbdenjzo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(denuncia)
-      }).catch(err => console.log('Sheets sync:', err));
+      }).catch(err => console.log('Formspree sync:', err));
 
       document.querySelectorAll('.report-step').forEach(s => s.classList.remove('active'));
       document.getElementById('step-indicator').style.display = 'none';
