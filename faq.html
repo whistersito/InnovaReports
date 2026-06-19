@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Innova Reports – Preguntas Frecuentes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #1A3A6B;
+      --green: #6AB42B;
+      --orange:#F5A623;
+      --white: #FFFFFF;
+      --light: #EEF3F9;
+      --gray:  #6B7280;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--light);
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--navy);
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+    }
+    .logo-wrap { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-wrap img { height:32px; filter: brightness(0) invert(1); }
+    .logo-wrap span { font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem; color:#fff; }
+    .back-btn { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.82rem; transition:color 0.15s; }
+    .back-btn:hover { color:#fff; }
+
+    .green-bar {
+      background: var(--green);
+      padding: 11px 28px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    main {
+      flex: 1;
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    .page-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .page-title span { color: var(--green); }
+    .page-sub {
+      font-size: 0.93rem;
+      color: var(--gray);
+      margin-bottom: 36px;
+    }
+
+    /* Donqui pequeña al lado del título */
+    .title-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 18px;
+      margin-bottom: 6px;
+    }
+    .donqui-mini {
+      width: 72px;
+      height: auto;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15));
+      flex-shrink: 0;
+    }
+
+    /* Acordeón FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 2px 16px rgba(26,58,107,0.08);
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .faq-item.open { border-color: var(--green); }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      cursor: pointer;
+      text-align: left;
+      gap: 12px;
+    }
+    .faq-q-text {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--navy);
+    }
+    .faq-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      transition: transform 0.25s;
+      color: var(--green);
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.25s;
+      padding: 0 22px;
+    }
+    .faq-item.open .faq-a {
+      max-height: 600px;
+      padding: 0 22px 20px;
+    }
+    .faq-a p {
+      font-size: 0.92rem;
+      color: var(--gray);
+      line-height: 1.65;
+    }
+    .faq-a strong { color: var(--navy); }
+
+    /* Tag categoría */
+    .faq-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 9px;
+      border-radius: 99px;
+      margin-bottom: 8px;
+    }
+    .tag-platform { background:#E8F5D8; color:#3A7A0A; }
+    .tag-program  { background:#FEF3E0; color:#92400E; }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.72rem;
+      color: #9CA3AF;
+      background: var(--white);
+      border-top: 1px solid #DDE5F0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Innova Schools"/>
+      <span>Innova Schools</span>
+    </div>
+    <a class="back-btn" href="student.html">← Volver</a>
+  </header>
+
+  <div class="green-bar">Preguntas Frecuentes 📋</div>
+
+  <main>
+
+    <div class="title-row">
+      <div>
+        <h1 class="page-title">¿Tienes <span>dudas?</span></h1>
+        <p class="page-sub">Don Quixote te responde. ¡Sin rodeos! ⚔️</p>
+      </div>
+      <img class="donqui-mini" src="Donqui.png" alt="Don Quixote"/>
+    </div>
+
+    <div class="faq-list">
+
+      <!-- 1 -->
+      <div class="faq-item" id="faq-1">
+        <button class="faq-q" onclick="toggle('faq-1')">
+          <span class="faq-q-text">¿Qué es Innova Reports?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <span class="faq-tag tag-platform">Plataforma</span>
+          <p>
+            <strong>Innova Reports</strong> es una plataforma de denuncias anónimas creada para los estudiantes de Innova Schools.
+            Su objetivo es promover la <strong>convivencia armoniosa</strong> dentro de la institución, permitiéndote reportar
+            situaciones de bullying, acoso, problemas de infraestructura o cualquier hecho que afecte el bienestar escolar,
+            <strong>sin necesidad de revelar tu identidad</strong>.
+            <br><br>
+            Todo reporte es revisado por el equipo responsable de convivencia para tomar las acciones necesarias.
+          </p>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="faq-item" id="faq-2">
+        <button class="faq-q" onclick="toggle('faq-2')">
+          <span class="faq-q-text">¿Qué es el IP (Innovation Program) en Innova Schools?</span>
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">
+          <span class="faq-tag tag-program">Programa</span>
+          <p>
+            El <strong>Innovation Program (IP)</strong> es el programa académico de alto rendimiento de Innova Schools.
+            Está diseñado para estudiantes que buscan un mayor desafío intelectual, combinando el currículo nacional
+            con metodologías de pensamiento crítico, liderazgo e innovación.
+            <br><br>
+            Los estudiantes del IP desarrollan proyectos de impacto real, participan en competencias académicas
+            y tienen acceso a recursos y mentorías especiales que potencian sus habilidades para el futuro.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>© 2025 Innova Schools · Innova Reports</footer>
+
+  <script>
+    function toggle(id) {
+      const item = document.getElementById(id);
+      item.classList.toggle('open');
+    }
+  </script>
+
+</body>
+</html>
