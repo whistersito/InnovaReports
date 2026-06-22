@@ -509,54 +509,56 @@
       const grid = document.getElementById('reports-grid');
       grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando denuncias...</p></div>';
 
-      // Leer desde Google Sheets a través de Apps Script
-      fetch('https://script.google.com/macros/s/AKfycbx3SLSq4rx9TEtNiHcSBXaQfRwHggNDbNpRSWScA5tF4oB_89UKauvCiwLssnjwLQ0f/exec')
+      // Intentar leer desde Google Sheets
+      fetch('https://script.google.com/macros/s/AKfycbxmjwUzoo65zeMFQE5JgOxu9h1SL4pMH9g6xZdgGOgxGI_6WNrU0pyN_dXt2RtiFP1k/exec')
         .then(response => response.json())
         .then(denuncias => {
-          if (!denuncias || denuncias.length === 0) {
-            grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
-            return;
-          }
-
-          // Invertir para mostrar más recientes primero
-          const sorted = denuncias.reverse();
-
-          grid.innerHTML = sorted.map(r => {
-            // Parsear la fecha si es necesario
-            let fecha = r.fecha;
-            if (fecha instanceof Date) {
-              fecha = fecha.toLocaleDateString('es-PE');
-            } else if (typeof fecha === 'string' && fecha.includes('/')) {
-              fecha = fecha.split(' ')[0];
-            } else {
-              fecha = new Date(fecha).toLocaleDateString('es-PE', { day: 'short', month: 'short', year: 'numeric' });
-            }
-
-            const statusClass = r.estado === 'Resuelto' ? 'resuelto' : r.estado === 'En progreso' ? 'en-progreso' : '';
-            
-            return `
-              <div class="report-card">
-                <div class="report-header">
-                  <span class="report-id">#${r.id}</span>
-                  <span class="report-status ${statusClass}">${r.estado}</span>
-                </div>
-                <div class="report-motivo">${r.motivo}</div>
-                <div class="report-categoria">📌 ${r.categoria}</div>
-                <div class="report-meta">📍 ${r.lugar} · 📅 ${fecha}</div>
-                <div class="report-desc">${r.descripcion}</div>
-                <div class="report-actions">
-                  <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Pendiente')">Pendiente</button>
-                  <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'En progreso')">Progreso</button>
-                  <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Resuelto')">Resuelto</button>
-                </div>
-              </div>
-            `;
-          }).join('');
+          console.log('✅ Denuncias cargadas desde Google Sheets:', denuncias);
+          renderDenuncias(denuncias);
         })
         .catch(err => {
-          console.error('Error al cargar denuncias:', err);
-          grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><p>Error al cargar las denuncias. Recarga la página.</p></div>';
+          console.error('❌ Error leyendo Google Sheets, usando localStorage:', err);
+          const lista = getDenuncias();
+          renderDenuncias(lista);
         });
+    }
+
+    function renderDenuncias(denuncias) {
+      const grid = document.getElementById('reports-grid');
+      
+      if (!denuncias || denuncias.length === 0) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
+        return;
+      }
+
+      grid.innerHTML = denuncias.map(r => {
+        let fecha = r.fecha;
+        if (fecha instanceof Date) {
+          fecha = fecha.toLocaleDateString('es-PE');
+        } else if (typeof fecha === 'string') {
+          fecha = new Date(fecha).toLocaleDateString('es-PE', { day: 'short', month: 'short', year: 'numeric' });
+        }
+
+        const statusClass = r.estado === 'Resuelto' ? 'resuelto' : r.estado === 'En progreso' ? 'en-progreso' : '';
+        
+        return `
+          <div class="report-card">
+            <div class="report-header">
+              <span class="report-id">#${r.id}</span>
+              <span class="report-status ${statusClass}">${r.estado}</span>
+            </div>
+            <div class="report-motivo">${r.motivo}</div>
+            <div class="report-categoria">📌 ${r.categoria}</div>
+            <div class="report-meta">📍 ${r.lugar} · 📅 ${fecha}</div>
+            <div class="report-desc">${r.descripcion}</div>
+            <div class="report-actions">
+              <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Pendiente')">Pendiente</button>
+              <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'En progreso')">Progreso</button>
+              <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Resuelto')">Resuelto</button>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     // Verificar si ya está logueado
