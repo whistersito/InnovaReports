@@ -908,16 +908,7 @@
       const lista = getDenuncias();
       lista.unshift(denuncia);
       saveDenuncias(lista);
-
-      // Intentar enviar a Google Sheets
-      fetch('https://script.google.com/macros/s/AKfycbxmjwUzoo65zeMFQE5JgOxu9h1SL4pMH9g6xZdgGOgxGI_6WNrU0pyN_dXt2RtiFP1k/exec', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(denuncia)
-      })
-      .then(res => res.json())
-      .then(data => console.log('✅ Denuncia enviada a Google Sheets:', data))
-      .catch(err => console.error('❌ Error enviando a Google Sheets, se guardó en localStorage:', err));
+      console.log('✅ Denuncia guardada en localStorage:', denuncia);
 
       document.querySelectorAll('.report-step').forEach(s => s.classList.remove('active'));
       document.getElementById('step-indicator').style.display = 'none';

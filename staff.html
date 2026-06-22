@@ -515,30 +515,15 @@
     }
 
     function loadReports() {
-      const grid = document.getElementById('reports-grid');
-      
-      // PRIMERO intentar localStorage (que SÍ funciona)
       const listaLocal = getDenuncias();
+      console.log('📋 Denuncias en localStorage:', listaLocal);
       
       if (listaLocal && listaLocal.length > 0) {
-        console.log('✅ Leyendo denuncias desde localStorage:', listaLocal);
         renderDenuncias(listaLocal);
-        return;
+      } else {
+        const grid = document.getElementById('reports-grid');
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
       }
-
-      // Si localStorage está vacío, intentar Google Sheets
-      grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando denuncias...</p></div>';
-      
-      fetch('https://script.google.com/macros/s/AKfycbxmjwUzoo65zeMFQE5JgOxu9h1SL4pMH9g6xZdgGOgxGI_6WNrU0pyN_dXt2RtiFP1k/exec')
-        .then(response => response.json())
-        .then(denuncias => {
-          console.log('✅ Denuncias cargadas desde Google Sheets:', denuncias);
-          renderDenuncias(denuncias);
-        })
-        .catch(err => {
-          console.error('❌ Error en Google Sheets:', err);
-          grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias.</p></div>';
-        });
     }
 
     function renderDenuncias(denuncias) {
