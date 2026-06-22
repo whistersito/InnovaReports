@@ -2,7 +2,7 @@
 
 **Plataforma de denuncias anónimas para fortalecer la convivencia escolar en Innova Schools.**
 
-![Status](https://img.shields.io/badge/Status-Active-green) ![Version](https://img.shields.io/badge/Version-1.3-blue) ![License](https://img.shields.io/badge/License-MIT-orange)
+![Status](https://img.shields.io/badge/Status-Active-green) ![Version](https://img.shields.io/badge/Version-1.9-blue) ![License](https://img.shields.io/badge/License-MIT-orange)
 
 ---
 
@@ -148,18 +148,74 @@ Contraseña: innova2026
    ↓
 5. Auto-refresca cada 5s
 ```
+
 ---
 
-## 📈 Estadísticas del Proyecto
+## 🔄 Cambios v1.3 → v1.9
 
-| Métrica | v1.2 | v1.3 |
-|---------|------|------|
-| **Páginas HTML** | 3 | 4 |
-| **Líneas de código CSS** | ~400 | ~1200 |
-| **Líneas de código JS** | ~300 | ~900 |
-| **Funciones JS** | 2 | 15+ |
-| **Animaciones** | 3 | 10+ |
-| **Elementos interactivos** | ~10 | ~50+ |
+### ✨ Agregado
+
+#### Panel de Reportes Completo
+- **4 categorías de reporte**:
+  - 🚻 Problemas en Baños (falta papel, jabón roto, vandalizaciones)
+  - 🍽️ Comida Podrida (comida en lugares escondidos)
+  - 🔍 Objeto Extraño (cosas sospechosas o peligrosas)
+  - ✏️ Otro (problemas no listados)
+- **Flujo idéntico a Denuncias** (3 pasos)
+- **Almacenamiento separado** en localStorage
+- **Número de seguimiento único** para cada reporte
+
+#### Dashboard Staff Mejorado
+- **Ahora muestra Denuncias + Reportes** en una sola vista
+- **Ordena por fecha** (más recientes primero)
+- **Contador de ambos tipos** en consola
+- **Botones de estado** funcionan para ambos
+
+#### Easter Eggs en FAQ 🎮
+- **Konami Code** (↑↑↓↓←→←→BA) → Fondo arcoíris animado
+- **10 clicks en Donqui** → Mensajes progresivos + animaciones
+- **Escribir "innova"** → Mensaje secreto desbloqueado
+- **Hover en título** → Gradiente colorido
+- **Abre todas las FAQs** → Lluvia de emojis + confetti
+- **Animaciones en FAQ items** → Deslizamiento suave
+
+#### Nuevas Páginas Legales
+- **terminos.html** (Términos y Condiciones):
+  - 9 secciones completas
+  - Aceptación, descripción, uso responsable
+  - Privacidad, limitación de responsabilidad
+  - Sanciones y ley aplicable
+  - Diseño limpio estilo Innova
+
+- **sobre-innova.html** (Sobre Innova Schools):
+  - Misión, Visión, Valores
+  - 6 cards de valores interactivos
+  - Información del Innovation Program
+  - Descripción de Innova Reports
+  - Sección de contacto
+
+#### Mejoras UI/UX
+- **Footer de index.html** actualizado con links legales
+- **Navegación mejorada** entre páginas
+- **Consistencia visual** en todas las páginas
+- **Mensajes en consola** más descriptivos (✅ ❌ 📋)
+
+#### Validaciones Mejoradas
+- **Reportes validan campos** en tiempo real
+- **Mensajes de error claros**
+- **Botones deshabilitados** hasta llenar campos requeridos
+
+### 🗑️ Eliminado
+- Placeholder "prueba" en Reportes
+- Página vacía de staff (ahora es funcional)
+
+### 🔄 Modificado
+- **student.html**: Panel Reportes fue placeholder → Formulario completo
+- **staff.html**: Ahora combina Denuncias + Reportes
+- **index.html**: Footer con links a páginas legales
+- **faq.html**: JavaScript mejorado con easter eggs
+
+---
 
 ---
 
@@ -241,4 +297,4 @@ Para sugerencias, reportes de bugs o mejoras:
 
 **¡Gracias por usar Innova Reports! Juntos hacemos de Innova un lugar mejor. 🛡️✨**
 
-v1.3 — Junio 2025
+v1.9 — Junio 2025
