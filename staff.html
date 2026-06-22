@@ -234,6 +234,44 @@
       width: 100%;
     }
 
+    .filters-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .filter-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 15px;
+      border: 2px solid #E2E8F0;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .filter-input:focus { border-color: var(--green); }
+    .filter-btn {
+      padding: 10px 20px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .filter-btn:hover { background: var(--green); }
+    .filter-tag {
+      display: inline-block;
+      background: var(--light);
+      color: var(--navy);
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      margin-right: 6px;
+    }
+
     .dash-title {
       font-family: 'Nunito', sans-serif;
       font-weight: 900;
@@ -427,13 +465,25 @@
     <div class="dashboard-green-bar">📊 Panel de Control — Denuncias y Reportes</div>
 
     <div class="dashboard-body">
-      <h2 class="dash-title">Denuncias <span>Pendientes</span></h2>
+      <h2 class="dash-title">Denuncias <span>Pendientes</span> <span style="font-size: 0.6em; color: #9CA3AF; display: inline-block; background: var(--light); padding: 4px 12px; border-radius: 99px; margin-left: 8px;" id="count-badge">0</span></h2>
       <p class="dash-sub">Revisa y gestiona todas las denuncias anónimas enviadas por estudiantes.</p>
+
+      <div class="filters-bar">
+        <input type="text" class="filter-input" id="search-input" placeholder="🔍 Buscar por ubicación o motivo..." oninput="applyFilters()">
+        <select class="filter-input" id="status-filter" style="flex: 0 1 150px;" onchange="applyFilters()">
+          <option value="">Todos los estados</option>
+          <option value="Pendiente">Pendiente</option>
+          <option value="En progreso">En progreso</option>
+          <option value="Resuelto">Resuelto</option>
+        </select>
+      </div>
+
+      <div id="filter-tags" style="margin-bottom: 16px;"></div>
 
       <div class="reports-grid" id="reports-grid">
         <div class="empty-state">
           <div class="empty-state-icon">📭</div>
-          <p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p>
+          <p>No hay denuncias en este momento. ✨</p>
         </div>
       </div>
     </div>
@@ -527,14 +577,37 @@
       const listaReportes = getReportes();
       const todosCombinados = [...listaLocal, ...listaReportes].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
       
+      window.allReports = todosCombinados;
       console.log('📋 Denuncias:', listaLocal.length, '| Reportes:', listaReportes.length);
       
-      if (todosCombinados && todosCombinados.length > 0) {
-        renderDenuncias(todosCombinados);
-      } else {
-        const grid = document.getElementById('reports-grid');
-        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias ni reportes en este momento. ✨</p></div>';
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const statusFilter = document.getElementById('status-filter').value;
+      
+      let filtered = window.allReports || [];
+      
+      if (searchTerm) {
+        filtered = filtered.filter(r => 
+          r.motivo.toLowerCase().includes(searchTerm) || 
+          r.ubicacion.toLowerCase().includes(searchTerm) ||
+          r.lugar.toLowerCase().includes(searchTerm)
+        );
       }
+      
+      if (statusFilter) {
+        filtered = filtered.filter(r => r.estado === statusFilter);
+      }
+
+      if (filtered.length === 0) {
+        const grid = document.getElementById('reports-grid');
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay resultados.</p></div>';
+        return;
+      }
+
+      renderDenuncias(filtered);
     }
 
     function renderDenuncias(denuncias) {
@@ -581,6 +654,9 @@
 
     function renderDenuncias(denuncias) {
       const grid = document.getElementById('reports-grid');
+      const badge = document.getElementById('count-badge');
+      
+      if (badge) badge.textContent = denuncias.length;
       
       if (!denuncias || denuncias.length === 0) {
         grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';

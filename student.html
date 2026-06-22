@@ -334,7 +334,20 @@
       .sidebar { width: 180px; }
       .donqui-img { width: 80px; }
       .donqui-bubble { max-width: 170px; font-size: 0.75rem; }
+      .filters-bar { flex-direction: column; }
+      .filter-input { min-width: auto; }
+      main { padding: 24px 16px 40px; }
     }
+
+    /* Transiciones suaves */
+    * {
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Hover effects mejorados */
+    button { cursor: pointer; }
+    .option-card { cursor: pointer; user-select: none; }
+    .nav-item { cursor: pointer; user-select: none; }
 
     /* ── DECO ESQUINAS ── */
     .deco {
