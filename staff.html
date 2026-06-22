@@ -445,6 +445,15 @@
     const VALID_USER = 'innova';
     const VALID_PASS = 'innova2026';
 
+    // Obtener denuncias de localStorage
+    function getDenuncias() {
+      try {
+        return JSON.parse(localStorage.getItem('innovaReportsDenuncias') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
     // Login
     function handleLogin(e) {
       e.preventDefault();
@@ -586,7 +595,7 @@
       if (sessionStorage.getItem('staffLoggedIn') === 'true') {
         loadReports();
       }
-    }, 105000);
+    }, 5000);
   </script>
 
 </body>
