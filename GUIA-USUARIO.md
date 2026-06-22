@@ -95,7 +95,7 @@ Depende de la gravedad. El equipo revisa constantemente.
 **¿Puedo ver quién reportó?**
 No. El anonimato está garantizado.
 
-**¿Qué pasa si envío información falsa?**
+**¿Qué pasa se envío información falsa?**
 Puede haber consecuencias disciplinarias. Usa responsablemente.
 
 **¿Dónde veo mis reportes?**
@@ -105,7 +105,7 @@ En el panel "Estado" de la zona de estudiante.
 
 ## 📞 Soporte
 
-Para problemas técnicos, contacta al equipo de Innova Schools.
+Si tienes algún tipo de problema o duda, no dudes con acercarte a la mesa del grupo 5.
 
 ---
 
