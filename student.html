@@ -877,6 +877,7 @@
       '¿Tienes dudas? ¡No te rindas, aquí estoy yo! 💪',
       'Recuerda: reportar es un acto de valentía. 🌟',
       '¡El que no denuncia, consiente! — Don Quixote dixit. 📜',
+      '¡Gracias por apoyar este proyecto!',
       '¡Yo luché contra molinos de viento, tú puedes con esto! 🌀',
       'La cobardía es el único pecado que no tiene perdón. ¡Reporta! 🔥',
       '¡Sin testigos no hay justicia! Sé tú ese testigo. 👁️',
@@ -890,7 +891,6 @@
       'Lo que no se reporta, no se arregla. Simple lógica. 🧠',
       '¡Juntos hacemos de Innova un lugar épico! 🚀',
       'No hay denuncia pequeña si el problema es real. 💬',
-      'Soy Don Quixote y apruebo este mensaje. ✅⚔️',
       '¡Ánimo, estudiante! El cambio empieza contigo. 🌱',
     ];
     const bubble = document.getElementById('donqui-bubble');
@@ -985,7 +985,7 @@
     // Almacenamiento local (por navegador) — placeholder hasta conectar backend real
     function getDenuncias() {
       try {
-        return JSON.parse(localStorage.getItem('innovaReportsDenuncias') || '[]');
+        return JSON.parse(localStorage.getItem('innEl que no denuncia, consiente! — Don Quixote dixit. 📜ovaReportsDenuncias') || '[]');
       } catch (e) {
         return [];
       }
