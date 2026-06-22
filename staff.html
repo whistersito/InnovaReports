@@ -507,9 +507,19 @@
 
     function loadReports() {
       const grid = document.getElementById('reports-grid');
-      grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando denuncias...</p></div>';
+      
+      // PRIMERO intentar localStorage (que SÍ funciona)
+      const listaLocal = getDenuncias();
+      
+      if (listaLocal && listaLocal.length > 0) {
+        console.log('✅ Leyendo denuncias desde localStorage:', listaLocal);
+        renderDenuncias(listaLocal);
+        return;
+      }
 
-      // Intentar leer desde Google Sheets
+      // Si localStorage está vacío, intentar Google Sheets
+      grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando denuncias...</p></div>';
+      
       fetch('https://script.google.com/macros/s/AKfycbxmjwUzoo65zeMFQE5JgOxu9h1SL4pMH9g6xZdgGOgxGI_6WNrU0pyN_dXt2RtiFP1k/exec')
         .then(response => response.json())
         .then(denuncias => {
@@ -517,9 +527,8 @@
           renderDenuncias(denuncias);
         })
         .catch(err => {
-          console.error('❌ Error leyendo Google Sheets, usando localStorage:', err);
-          const lista = getDenuncias();
-          renderDenuncias(lista);
+          console.error('❌ Error en Google Sheets:', err);
+          grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias.</p></div>';
         });
     }
 
