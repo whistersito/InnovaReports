@@ -163,78 +163,6 @@
       border-top: 1px solid #DDE5F0;
     }
 
-    /* ── DIÁLOGOS DON QUIXOTE ── */
-    .donqui-dialog-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.5);
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
-    }
-    .donqui-dialog-overlay.show {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    .donqui-dialog {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 32px;
-      max-width: 500px;
-      width: 90%;
-      box-shadow: 0 20px 60px rgba(26,58,107,0.3);
-      text-align: center;
-      animation: slideUp 0.4s ease;
-    }
-    @keyframes slideUp {
-      from { transform: translateY(30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .donqui-dialog-icon {
-      font-size: 3rem;
-      margin-bottom: 12px;
-    }
-
-    .donqui-dialog-title {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1.3rem;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-
-    .donqui-dialog-message {
-      font-size: 0.95rem;
-      color: var(--gray);
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-
-    .donqui-dialog-btn {
-      background: var(--navy);
-      color: var(--white);
-      border: none;
-      padding: 11px 32px;
-      border-radius: 99px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .donqui-dialog-btn:hover {
-      background: var(--green);
-    }
-
     /* ── DECO ESQUINAS ── */
     .deco { position: fixed; pointer-events: none; z-index: 0; }
     .deco-tl { top: 70px; left: -30px; }
@@ -324,35 +252,7 @@
 
   <footer>© 2025 Innova Schools · Innova Reports</footer>
 
-  <!-- DIÁLOGO DON QUIXOTE -->
-  <div class="donqui-dialog-overlay" id="donqui-dialog-overlay">
-    <div class="donqui-dialog">
-      <div class="donqui-dialog-icon" id="donqui-dialog-icon">🗡️</div>
-      <div class="donqui-dialog-title" id="donqui-dialog-title">Don Quixote</div>
-      <p class="donqui-dialog-message" id="donqui-dialog-message"></p>
-      <button class="donqui-dialog-btn" onclick="closeDonquiDialog()">Entendido ✓</button>
-    </div>
-  </div>
-
   <script>
-    function showDonquiDialog(icon, title, message) {
-      document.getElementById('donqui-dialog-icon').textContent = icon;
-      document.getElementById('donqui-dialog-title').textContent = title;
-      document.getElementById('donqui-dialog-message').textContent = message;
-      document.getElementById('donqui-dialog-overlay').classList.add('show');
-    }
-
-    function closeDonquiDialog() {
-      document.getElementById('donqui-dialog-overlay').classList.remove('show');
-    }
-
-    // Cerrar al hacer click en overlay
-    document.getElementById('donqui-dialog-overlay').addEventListener('click', (e) => {
-      if (e.target.id === 'donqui-dialog-overlay') {
-        closeDonquiDialog();
-      }
-    });
-  </script>
     function toggle(id) {
       const item = document.getElementById(id);
       item.classList.toggle('open');
@@ -395,7 +295,7 @@
       `;
       document.head.appendChild(style);
       
-      showDonquiDialog('🌈', 'Modo Arcoíris Activado', '¡Lo hiciste! El poder del arcoíris fluye a través de Innova Reports. Eres digno de mi espada. ⚔️✨');
+      alert('🌈 ¡MODO ARCOÍRIS ACTIVADO! Don Quixote estaría orgulloso ⚔️✨');
     }
 
     // 🎭 Click múltiple en Donqui
@@ -411,10 +311,10 @@
           donquiImg.style.animation = 'spin 0.5s ease';
         }
         if (donquiClicks === 5) {
-          showDonquiDialog('😤', 'Oye, Estudiante', '¿Dejas de presionarme? Tengo batallas más importantes que librar. ⚔️');
+          alert('¡Oye! ¿Dejas de presionarme? 😤');
         }
         if (donquiClicks === 10) {
-          showDonquiDialog('⚔️', 'Don Quixote Aprueba', 'Bueno, ya. Eres un guerrero tenaz. Que la justicia te acompañe siempre.');
+          alert('Bueno, ya. ⚔️ Eres un guerrero tenaz.');
           donquiClicks = 0;
           donquiImg.style.transform = 'scale(1) rotate(0deg)';
         }
@@ -428,7 +328,27 @@
       
       if (secretText.includes('innova')) {
         if (!document.querySelector('.secret-message')) {
-          showDonquiDialog('🔓', 'Secreto Desbloqueado', 'Eres un verdadero explorador de Innova Reports. Sigue denunciando y reportando. La justicia te acompaña. 🗺️⚔️');
+          const msg = document.createElement('div');
+          msg.className = 'secret-message';
+          msg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1A3A6B, #2F80C2);
+            color: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            z-index: 9999;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: popIn 0.5s ease;
+          `;
+          msg.innerHTML = `<strong>🔓 SECRETO DESBLOQUEADO</strong><br><br>Eres un verdadero explorador de Innova Reports. 🗺️⚔️<br><br>Sigue denunciando y reportando. La justicia te acompaña.`;
+          document.body.appendChild(msg);
+          
+          setTimeout(() => msg.remove(), 5000);
           secretText = '';
         }
       }
@@ -471,7 +391,7 @@
     }
 
     function celebrateAllOpen() {
-      showDonquiDialog('🎉', '¡Felicidades!', 'Abriste TODAS las preguntas. Eres un estudiante muy curioso. Tu sed de conocimiento es digna de admiración. 🧠✨');
+      alert('🎉 ¡Felicidades! Abriste TODAS las preguntas. Eres un estudiante muy curioso. 🧠✨');
       
       // Pequeña lluvia de emojis
       for (let i = 0; i < 20; i++) {
