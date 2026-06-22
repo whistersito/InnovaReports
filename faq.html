@@ -257,6 +257,183 @@
       const item = document.getElementById(id);
       item.classList.toggle('open');
     }
+
+    // ════════════════════════════════
+    // EASTER EGGS
+    // ════════════════════════════════
+
+    // 🎮 Konami Code: ↑↑↓↓←→←→BA
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiIndex = 0;
+
+    document.addEventListener('keydown', (e) => {
+      const key = e.key === 'ArrowUp' || e.key === 'ArrowDown' || e.key === 'ArrowLeft' || e.key === 'ArrowRight' ? e.key : e.key.toLowerCase();
+      
+      if (key === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+          activateKonamiMode();
+          konamiIndex = 0;
+        }
+      } else {
+        konamiIndex = 0;
+      }
+    });
+
+    function activateKonamiMode() {
+      document.body.style.background = 'linear-gradient(45deg, #FF00FF, #00FFFF, #FFFF00)';
+      document.body.style.backgroundSize = '400% 400%';
+      document.body.style.animation = 'rainbow 3s ease infinite';
+      
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes rainbow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      alert('🌈 ¡MODO ARCOÍRIS ACTIVADO! Don Quixote estaría orgulloso ⚔️✨');
+    }
+
+    // 🎭 Click múltiple en Donqui
+    let donquiClicks = 0;
+    const donquiImg = document.querySelector('.donqui-mini');
+    
+    if (donquiImg) {
+      donquiImg.addEventListener('click', () => {
+        donquiClicks++;
+        donquiImg.style.transform = `scale(${1 + donquiClicks * 0.1}) rotate(${donquiClicks * 10}deg)`;
+        
+        if (donquiClicks === 3) {
+          donquiImg.style.animation = 'spin 0.5s ease';
+        }
+        if (donquiClicks === 5) {
+          alert('¡Oye! ¿Dejas de presionarme? 😤');
+        }
+        if (donquiClicks === 10) {
+          alert('Bueno, ya. ⚔️ Eres un guerrero tenaz.');
+          donquiClicks = 0;
+          donquiImg.style.transform = 'scale(1) rotate(0deg)';
+        }
+      });
+    }
+
+    // 🔐 Secreto: escribe "innova" en la página
+    let secretText = '';
+    document.addEventListener('keypress', (e) => {
+      secretText += e.key.toLowerCase();
+      
+      if (secretText.includes('innova')) {
+        if (!document.querySelector('.secret-message')) {
+          const msg = document.createElement('div');
+          msg.className = 'secret-message';
+          msg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1A3A6B, #2F80C2);
+            color: white;
+            padding: 40px 60px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            z-index: 9999;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: popIn 0.5s ease;
+          `;
+          msg.innerHTML = `<strong>🔓 SECRETO DESBLOQUEADO</strong><br><br>Eres un verdadero explorador de Innova Reports. 🗺️⚔️<br><br>Sigue denunciando y reportando. La justicia te acompaña.`;
+          document.body.appendChild(msg);
+          
+          setTimeout(() => msg.remove(), 5000);
+          secretText = '';
+        }
+      }
+      
+      if (secretText.length > 20) secretText = secretText.slice(-20);
+    });
+
+    // 🎪 Animación especial en FAQ items
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach((item, idx) => {
+      item.addEventListener('mouseenter', () => {
+        item.style.transform = 'translateX(10px)';
+      });
+      item.addEventListener('mouseleave', () => {
+        item.style.transform = 'translateX(0)';
+      });
+    });
+
+    // 🌟 Título secreto al pasar el mouse
+    const title = document.querySelector('.page-title');
+    if (title) {
+      title.addEventListener('mouseenter', () => {
+        title.style.backgroundImage = 'linear-gradient(45deg, #1A3A6B, #6AB42B, #F5A623)';
+        title.style.backgroundClip = 'text';
+        title.style.webkitBackgroundClip = 'text';
+        title.style.webkitTextFillColor = 'transparent';
+      });
+      title.addEventListener('mouseleave', () => {
+        title.style.backgroundImage = 'none';
+        title.style.webkitTextFillColor = 'inherit';
+      });
+    }
+
+    // 🎉 Confetti al abrir todas las FAQs
+    function checkAllOpen() {
+      const allOpen = Array.from(document.querySelectorAll('.faq-item')).every(item => item.classList.contains('open'));
+      if (allOpen) {
+        celebrateAllOpen();
+      }
+    }
+
+    function celebrateAllOpen() {
+      alert('🎉 ¡Felicidades! Abriste TODAS las preguntas. Eres un estudiante muy curioso. 🧠✨');
+      
+      // Pequeña lluvia de emojis
+      for (let i = 0; i < 20; i++) {
+        const emoji = document.createElement('div');
+        emoji.textContent = ['⚔️', '🛡️', '📚', '⭐', '🎓'][Math.floor(Math.random() * 5)];
+        emoji.style.cssText = `
+          position: fixed;
+          left: ${Math.random() * 100}%;
+          top: -20px;
+          font-size: 2rem;
+          z-index: 9999;
+          animation: fall 3s linear;
+          pointer-events: none;
+        `;
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 3000);
+      }
+
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes fall {
+          to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        @keyframes popIn {
+          from { transform: translate(-50%, -50%) scale(0); }
+          to { transform: translate(-50%, -50%) scale(1); }
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
+    // Detector de apertura de FAQ
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const btn = item.querySelector('.faq-q');
+      btn.addEventListener('click', () => {
+        setTimeout(checkAllOpen, 400);
+      });
+    });
   </script>
 
 </body>

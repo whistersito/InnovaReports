@@ -445,7 +445,15 @@
     const VALID_USER = 'innova';
     const VALID_PASS = 'innova2026';
 
-    // Obtener denuncias de localStorage
+    // Obtener reportes de localStorage
+    function getReportes() {
+      try {
+        return JSON.parse(localStorage.getItem('innovaReportsReportes') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
     function getDenuncias() {
       try {
         return JSON.parse(localStorage.getItem('innovaReportsDenuncias') || '[]');
@@ -516,13 +524,16 @@
 
     function loadReports() {
       const listaLocal = getDenuncias();
-      console.log('📋 Denuncias en localStorage:', listaLocal);
+      const listaReportes = getReportes();
+      const todosCombinados = [...listaLocal, ...listaReportes].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
       
-      if (listaLocal && listaLocal.length > 0) {
-        renderDenuncias(listaLocal);
+      console.log('📋 Denuncias:', listaLocal.length, '| Reportes:', listaReportes.length);
+      
+      if (todosCombinados && todosCombinados.length > 0) {
+        renderDenuncias(todosCombinados);
       } else {
         const grid = document.getElementById('reports-grid');
-        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias ni reportes en este momento. ✨</p></div>';
       }
     }
 
@@ -597,9 +608,9 @@
             <div class="report-meta">📍 ${r.lugar} · 📅 ${fecha}</div>
             <div class="report-desc">${r.descripcion}</div>
             <div class="report-actions">
-              <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Pendiente')">Pendiente</button>
-              <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'En progreso')">Progreso</button>
-              <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaSheets('${r.id}', 'Resuelto')">Resuelto</button>
+              <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Pendiente')">Pendiente</button>
+              <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'En progreso')">Progreso</button>
+              <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Resuelto')">Resuelto</button>
             </div>
           </div>
         `;

@@ -714,8 +714,97 @@
       </div>
 
       <!-- Panel Reportes -->
-      <div class="panel" id="panel-reportes">
-        prueba
+      <div class="panel panel-scroll" id="panel-reportes">
+        <div class="report-form-wrap">
+
+          <div class="step-indicator" id="step-indicator-reportes">
+            <span class="step-dot active" data-step="1"></span>
+            <span class="step-dot" data-step="2"></span>
+            <span class="step-dot" data-step="3"></span>
+          </div>
+
+          <!-- PASO 1: Tipo de Reporte -->
+          <div class="report-step active" id="step-r1">
+            <p class="report-question">¿Qué tipo de problema encontraste?</p>
+            <p class="report-hint">Selecciona la opción que corresponda.</p>
+
+            <div class="option-grid">
+              <div class="option-card" data-motivo="Baños" onclick="selectReporte(this)">
+                <span class="option-icon">🚻</span>
+                <div>
+                  <div class="option-title">Problemas en Baños</div>
+                  <div class="option-desc">Falta papel, jabón roto, paredes vandalizadas</div>
+                </div>
+              </div>
+              <div class="option-card" data-motivo="Comida" onclick="selectReporte(this)">
+                <span class="option-icon">🍽️</span>
+                <div>
+                  <div class="option-title">Comida Podrida</div>
+                  <div class="option-desc">Comida en lugares escondidos (grass, etc)</div>
+                </div>
+              </div>
+              <div class="option-card" data-motivo="Objeto Extraño" onclick="selectReporte(this)">
+                <span class="option-icon">🔍</span>
+                <div>
+                  <div class="option-title">Objeto Extraño</div>
+                  <div class="option-desc">Encontré algo extraño o peligroso</div>
+                </div>
+              </div>
+              <div class="option-card" data-motivo="Otro" onclick="selectReporte(this)">
+                <span class="option-icon">✏️</span>
+                <div>
+                  <div class="option-title">Otro</div>
+                  <div class="option-desc">Otro tipo de problema</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="otro-input-wrap" id="otro-input-wrap-r">
+              <input type="text" class="field" id="otro-input-r" placeholder="Describe el problema..." oninput="validateReporte1()">
+            </div>
+
+            <div class="step-actions">
+              <span></span>
+              <button class="btn btn-primary" id="btn-r1-next" onclick="goReporte(2)" disabled>Continuar →</button>
+            </div>
+          </div>
+
+          <!-- PASO 2: Ubicación -->
+          <div class="report-step" id="step-r2">
+            <p class="report-question">¿Dónde está? <span class="light">(Sé específico)</span></p>
+            <p class="report-hint">Ej: Baño 3er piso, patio trasero, cafetería...</p>
+            <input type="text" class="field" id="lugar-r" placeholder="Escribe la ubicación..." oninput="validateReporte2()">
+
+            <div class="step-actions">
+              <button class="btn btn-ghost" onclick="goReporte(1)">← Atrás</button>
+              <button class="btn btn-primary" id="btn-r2-next" onclick="goReporte(3)" disabled>Continuar →</button>
+            </div>
+          </div>
+
+          <!-- PASO 3: Descripción -->
+          <div class="report-step" id="step-r3">
+            <p class="report-question">Cuéntanos más <span class="light">(Detalles)</span></p>
+            <p class="report-hint">Brinda información que ayude a resolver el problema rápidamente.</p>
+            <textarea class="field" id="descripcion-r" placeholder="Describe el problema con detalles..." oninput="validateReporte3()"></textarea>
+
+            <div class="step-actions">
+              <button class="btn btn-ghost" onclick="goReporte(2)">← Atrás</button>
+              <button class="btn btn-primary" id="btn-r-submit" onclick="submitReporte()" disabled>Enviar ✓</button>
+            </div>
+          </div>
+
+          <!-- PANTALLA DE ÉXITO -->
+          <div class="success-screen" id="success-screen-r">
+            <div class="success-icon">✅</div>
+            <p class="success-title">TU REPORTE FUE ENVIADO</p>
+            <p class="success-sub">Gracias por ayudar</p>
+            <p class="success-code" id="success-code-r"></p>
+            <div class="success-actions">
+              <button class="btn btn-primary" onclick="resetReporteForm()">Enviar otro reporte</button>
+            </div>
+          </div>
+
+        </div>
       </div>
 
       <!-- Panel Estado -->
@@ -955,6 +1044,109 @@
           </div>
         `;
       }).join('');
+    }
+    // ════════════════════════════════
+    // REPORTES (Baños, Comida, etc)
+    // ════════════════════════════════
+    let reporteState = { tipo: null, tipoDetalle: '', ubicacion: '', descripcion: '' };
+
+    function selectReporte(el) {
+      document.querySelectorAll('#step-r1 .option-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      reporteState.tipo = el.dataset.motivo;
+
+      const otroWrap = document.getElementById('otro-input-wrap-r');
+      if (reporteState.tipo === 'Otro') {
+        otroWrap.classList.add('show');
+      } else {
+        otroWrap.classList.remove('show');
+        document.getElementById('otro-input-r').value = '';
+      }
+      validateReporte1();
+    }
+
+    function validateReporte1() {
+      const btn = document.getElementById('btn-r1-next');
+      if (!reporteState.tipo) { btn.disabled = true; return; }
+      if (reporteState.tipo === 'Otro') {
+        const val = document.getElementById('otro-input-r').value.trim();
+        reporteState.tipoDetalle = val;
+        btn.disabled = val.length === 0;
+      } else {
+        btn.disabled = false;
+      }
+    }
+
+    function validateReporte2() {
+      const val = document.getElementById('lugar-r').value.trim();
+      reporteState.ubicacion = val;
+      document.getElementById('btn-r2-next').disabled = val.length === 0;
+    }
+
+    function validateReporte3() {
+      const val = document.getElementById('descripcion-r').value.trim();
+      reporteState.descripcion = val;
+      document.getElementById('btn-r-submit').disabled = val.length < 5;
+    }
+
+    function goReporte(n) {
+      document.querySelectorAll('#panel-reportes .report-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step-r' + n).classList.add('active');
+      document.querySelectorAll('#step-indicator-reportes .step-dot').forEach(d => {
+        const ds = parseInt(d.dataset.step);
+        d.classList.toggle('active', ds === n);
+        d.classList.toggle('done', ds < n);
+      });
+    }
+
+    function getReportes() {
+      try {
+        return JSON.parse(localStorage.getItem('innovaReportsReportes') || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveReportes(lista) {
+      localStorage.setItem('innovaReportsReportes', JSON.stringify(lista));
+    }
+
+    function submitReporte() {
+      const code = generateCode();
+      const reporte = {
+        id: code,
+        tipo: reporteState.tipo === 'Otro' ? reporteState.tipoDetalle : reporteState.tipo,
+        categoriaReporte: reporteState.tipo,
+        ubicacion: reporteState.ubicacion,
+        descripcion: reporteState.descripcion,
+        fecha: new Date().toISOString(),
+        estado: 'Pendiente'
+      };
+
+      const lista = getReportes();
+      lista.unshift(reporte);
+      saveReportes(lista);
+      console.log('✅ Reporte guardado en localStorage:', reporte);
+
+      document.querySelectorAll('#panel-reportes .report-step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step-indicator-reportes').style.display = 'none';
+      document.getElementById('success-screen-r').classList.add('active');
+      document.getElementById('success-code-r').textContent = 'N.º de seguimiento: ' + code;
+    }
+
+    function resetReporteForm() {
+      reporteState = { tipo: null, tipoDetalle: '', ubicacion: '', descripcion: '' };
+      document.querySelectorAll('#step-r1 .option-card').forEach(c => c.classList.remove('selected'));
+      document.getElementById('otro-input-r').value = '';
+      document.getElementById('otro-input-wrap-r').classList.remove('show');
+      document.getElementById('lugar-r').value = '';
+      document.getElementById('descripcion-r').value = '';
+      document.getElementById('btn-r1-next').disabled = true;
+      document.getElementById('btn-r2-next').disabled = true;
+      document.getElementById('btn-r-submit').disabled = true;
+      document.getElementById('success-screen-r').classList.remove('active');
+      document.getElementById('step-indicator-reportes').style.display = 'flex';
+      goReporte(1);
     }
   </script>
 
