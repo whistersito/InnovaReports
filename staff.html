@@ -529,6 +529,48 @@
     function renderDenuncias(denuncias) {
       const grid = document.getElementById('reports-grid');
       
+      grid.innerHTML = denuncias.map(r => {
+        let fecha = r.fecha;
+        if (typeof fecha === 'string') {
+          fecha = new Date(fecha).toLocaleDateString('es-PE', { day: 'short', month: 'short', year: 'numeric' });
+        }
+
+        const statusClass = r.estado === 'Resuelto' ? 'resuelto' : r.estado === 'En progreso' ? 'en-progreso' : '';
+        
+        return `
+          <div class="report-card">
+            <div class="report-header">
+              <span class="report-id">#${r.id}</span>
+              <span class="report-status ${statusClass}">${r.estado}</span>
+            </div>
+            <div class="report-motivo">${r.motivo}</div>
+            <div class="report-categoria">📌 ${r.categoria}</div>
+            <div class="report-meta">📍 ${r.lugar} · 📅 ${fecha}</div>
+            <div class="report-desc">${r.descripcion}</div>
+            <div class="report-actions">
+              <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Pendiente')">Pendiente</button>
+              <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'En progreso')">Progreso</button>
+              <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Resuelto')">Resuelto</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateDenunciaLocal(id, nuevoEstado) {
+      const lista = getDenuncias();
+      const idx = lista.findIndex(d => d.id === id);
+      if (idx !== -1) {
+        lista[idx].estado = nuevoEstado;
+        localStorage.setItem('innovaReportsDenuncias', JSON.stringify(lista));
+        loadReports();
+        console.log(`✅ Denuncia ${id} actualizada a: ${nuevoEstado}`);
+      }
+    }
+
+    function renderDenuncias(denuncias) {
+      const grid = document.getElementById('reports-grid');
+      
       if (!denuncias || denuncias.length === 0) {
         grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
         return;
