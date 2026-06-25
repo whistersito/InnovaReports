@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Innova Reports – Estudiante</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="icon" type="logo/png" href="favicon.png">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -612,10 +612,6 @@
           <span class="nav-dot"></span> Denuncias
         </button>
 
-        <button class="nav-item" onclick="showPanel('reportes')" id="btn-reportes">
-          <span class="nav-dot"></span> Reportes
-        </button>
-
         <button class="nav-item" onclick="showPanel('estado')" id="btn-estado">
           <span class="nav-dot"></span> Estado
         </button>
@@ -726,13 +722,11 @@
         </div>
       </div>
 
-
-
       <!-- Panel Estado -->
       <div class="panel panel-scroll" id="panel-estado">
         <div class="report-form-wrap">
-          <p class="report-question" style="margin-bottom:2px;">Tus Denuncias y Reportes</p>
-          <p class="report-hint" style="margin-bottom:20px;">Aquí están las denuncias/reportes que enviaste y su estado.</p>
+          <p class="report-question" style="margin-bottom:2px;">Tus Denuncias</p>
+          <p class="report-hint" style="margin-bottom:20px;">Aquí están las denuncias que enviaste y su estado.</p>
           <div id="estado-list"></div>
         </div>
       </div>
@@ -762,7 +756,8 @@
       document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
 
       // Mostrar el seleccionado
-      document.getElementById('panel-' + name).classList.add('active');
+      const panel = document.getElementById('panel-' + name);
+      if (panel) panel.classList.add('active');
       const btn = document.getElementById('btn-' + name);
       if (btn) btn.classList.add('active');
 
@@ -784,7 +779,7 @@
       '¡Adelante, sin dudar! La justicia te acompaña. ⚔️',
       '¿Tienes dudas? ¡No te rindas, aquí estoy yo! 💪',
       'Recuerda: reportar es un acto de valentía. 🌟',
-      '¡El que no denuncia, consiente! — Don Quixote dixit. 📜',
+      '¡Gracias por apoyar este proyecto!',
       '¡Yo luché contra molinos de viento, tú puedes con esto! 🌀',
       'La cobardía es el único pecado que no tiene perdón. ¡Reporta! 🔥',
       '¡Sin testigos no hay justicia! Sé tú ese testigo. 👁️',
@@ -798,7 +793,6 @@
       'Lo que no se reporta, no se arregla. Simple lógica. 🧠',
       '¡Juntos hacemos de Innova un lugar épico! 🚀',
       'No hay denuncia pequeña si el problema es real. 💬',
-      'Soy Don Quixote y apruebo este mensaje. ✅⚔️',
       '¡Ánimo, estudiante! El cambio empieza contigo. 🌱',
     ];
     const bubble = document.getElementById('donqui-bubble');
@@ -813,10 +807,6 @@
       bubble.style.animation = '';
     });
 
-    // ════════════════════════════════════
-    // GUÍA DE DON QUIXOTE PARA DENUNCIAS
-    // (Estilo Limbus Company — dramático y caballeresco)
-    // ════════════════════════════════════
     function showDonquiDenunciasGuide() {
       bubble.style.display = '';
       bubble.innerHTML = `
@@ -824,7 +814,7 @@
         ¡Escúchame bien, escudero! ⚔️ Tres pasos hay en este sendero de la verdad:<br>
         <strong>1.</strong> Declara la naturaleza de tu queja.<br>
         <strong>2.</strong> Señala el lugar donde ocurrió la injusticia.<br>
-        <strong>3.</strong> Narra los hechos sin temor.<br>
+        <strong>3.</strong> Recuerda que cualquier tipo de Reporte fraudulento será motivo de la perdida de tu anonimato y de sanción .<br>
         ¡Yo, Don Quixote, seré tu testigo! 🛡️
       `;
       bubble.style.animation = 'none';
@@ -890,7 +880,7 @@
       return 'IR-' + Math.random().toString(36).substring(2, 8).toUpperCase();
     }
 
-    // Almacenamiento local (por navegador) — placeholder hasta conectar backend real
+    // Almacenamiento local (por navegador)
     function getDenuncias() {
       try {
         return JSON.parse(localStorage.getItem('innovaReportsDenuncias') || '[]');
@@ -914,7 +904,7 @@
         estado: 'Pendiente'
       };
 
-      // Guardar en localStorage SIEMPRE
+      // Guardar en localStorage
       const lista = getDenuncias();
       lista.unshift(denuncia);
       saveDenuncias(lista);
@@ -949,7 +939,7 @@
       const lista = getDenuncias();
 
       if (lista.length === 0) {
-        wrap.innerHTML = '<p class="estado-empty">Aún no has enviado ninguna denuncia o reporte. 📭<br>Cuando envíes uno, aparecerá aquí junto a su estado.</p>';
+        wrap.innerHTML = '<p class="estado-empty">Aún no has enviado ninguna denuncia. 📭<br>Cuando envíes una, aparecerá aquí junto a su estado.</p>';
         return;
       }
 
@@ -966,7 +956,6 @@
         `;
       }).join('');
     }
-
   </script>
 
 </body>
