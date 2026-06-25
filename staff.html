@@ -4,516 +4,136 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Innova Reports – Panel Staff</title>
-  <link rel="icon" type="logo/png" href="favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --navy: #1A3A6B; --green: #6AB42B; --orange: #F5A623; --blue: #2F80C2; --white: #FFFFFF; --light: #EEF3F9; --gray: #6B7280; }
+    body { min-height: 100vh; background: var(--light); font-family: 'Inter', sans-serif; }
 
-    :root {
-      --navy:   #1A3A6B;
-      --green:  #6AB42B;
-      --orange: #F5A623;
-      --blue:   #2F80C2;
-      --white:  #FFFFFF;
-      --light:  #EEF3F9;
-      --gray:   #6B7280;
-    }
-
-    body {
-      min-height: 100vh;
-      background: var(--light);
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ══════════════════════════════
-       LOGIN SCREEN
-    ══════════════════════════════ */
-    .login-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 20px;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .login-deco {
-      position: absolute;
-      border-radius: 20px;
-      opacity: 0.08;
-    }
-    .deco-1 { width: 200px; height: 200px; background: var(--white); top: -50px; right: -50px; transform: rotate(15deg); }
-    .deco-2 { width: 150px; height: 150px; background: var(--green); bottom: 80px; left: -40px; transform: rotate(-25deg); }
-
-    .login-card {
-      background: var(--white);
-      border-radius: 24px;
-      padding: 48px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 20px 60px rgba(26,58,107,0.25);
-      position: relative;
-      z-index: 10;
-      animation: card-in 0.5s ease both;
-    }
-    @keyframes card-in {
-      from { opacity: 0; transform: translateY(30px) scale(0.95); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .login-logo {
-      text-align: center;
-      margin-bottom: 28px;
-    }
-    .login-logo img {
-      height: 40px;
-      margin-bottom: 8px;
-    }
-    .login-logo-text {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1.1rem;
-      color: var(--navy);
-      letter-spacing: -0.3px;
-    }
-
-    .login-title {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1.6rem;
-      color: var(--navy);
-      text-align: center;
-      margin-bottom: 6px;
-      letter-spacing: -0.5px;
-    }
-    .login-title span { color: var(--green); }
-
-    .login-sub {
-      font-size: 0.85rem;
-      color: var(--gray);
-      text-align: center;
-      margin-bottom: 32px;
-      line-height: 1.5;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
-    .form-label {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: var(--navy);
-      letter-spacing: 0.02em;
-    }
-    input[type="text"], input[type="password"] {
-      padding: 12px 15px;
-      border: 2px solid #E2E8F0;
-      border-radius: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      color: var(--navy);
-      outline: none;
-      transition: border-color 0.15s;
-    }
-    input[type="text"]:focus, input[type="password"]:focus {
-      border-color: var(--green);
-    }
-
-    .login-error {
-      display: none;
-      background: #FEE2E2;
-      border: 2px solid #FCA5A5;
-      color: #991B1B;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.82rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-      text-align: center;
-      animation: shake 0.4s ease;
-    }
+    /* LOGIN */
+    .login-wrap { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%); }
+    .login-card { background: var(--white); border-radius: 24px; padding: 48px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(26,58,107,0.25); }
+    .login-title { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.6rem; color: var(--navy); text-align: center; margin-bottom: 28px; }
+    .field { width: 100%; padding: 11px 14px; border: 2px solid #E2E8F0; border-radius: 10px; font-size: 0.9rem; margin-bottom: 14px; font-family: 'Inter', sans-serif; }
+    .field:focus { outline: none; border-color: var(--green); }
+    .btn-login { width: 100%; padding: 12px; background: var(--navy); color: var(--white); border: none; border-radius: 10px; font-family: 'Nunito', sans-serif; font-weight: 800; cursor: pointer; transition: background 0.15s; }
+    .btn-login:hover { background: var(--green); }
+    .login-error { color: #EF4444; font-size: 0.85rem; padding: 10px; background: #FEE2E2; border-radius: 8px; margin-bottom: 14px; text-align: center; display: none; animation: shake 0.4s ease; }
     .login-error.show { display: block; }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
+    @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-    .btn-login {
-      width: 100%;
-      padding: 13px;
-      background: linear-gradient(135deg, var(--navy), var(--blue));
-      color: var(--white);
-      border: none;
-      border-radius: 12px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.2s;
-    }
-    .btn-login:hover { box-shadow: 0 8px 24px rgba(26,58,107,0.3); }
-    .btn-login:active { transform: scale(0.98); }
+    /* DASHBOARD */
+    .dashboard-wrap { display: none; }
+    .dashboard-wrap.show { display: flex; min-height: 100vh; }
+    header { background: var(--navy); height: 62px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px; width: 100%; color: var(--white); }
+    .header-logo { display: flex; align-items: center; gap: 10px; }
+    .header-logo img { height: 36px; }
+    .header-logo span { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 0.95rem; }
+    .header-right { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; }
+    .logout-btn { background: rgba(255,255,255,0.2); border: none; color: var(--white); padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: 700; }
+    .logout-btn:hover { background: rgba(255,255,255,0.3); }
 
-    /* ══════════════════════════════
-       DASHBOARD STAFF
-    ══════════════════════════════ */
-    .dashboard-wrap {
-      display: none;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .dashboard-wrap.show { display: flex; }
-
-    .dashboard-header {
-      background: linear-gradient(135deg, var(--navy), var(--blue));
-      padding: 22px 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .dashboard-title {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .dashboard-title img {
-      height: 32px;
-    }
-    .dashboard-title h1 {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1rem;
-      color: var(--white);
-    }
-    .dashboard-user {
-      color: rgba(255,255,255,0.85);
-      font-size: 0.8rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-logout {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      color: var(--white);
-      padding: 7px 14px;
-      border-radius: 99px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: background 0.15s;
-      margin-left: 12px;
-    }
-    .btn-logout:hover { background: rgba(255,255,255,0.25); }
-
-    .dashboard-green-bar {
-      background: var(--green);
-      padding: 11px 28px;
-      color: var(--white);
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .dashboard-body {
-      flex: 1;
-      padding: 32px 28px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .filters-bar {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-    .filter-input {
-      flex: 1;
-      min-width: 200px;
-      padding: 10px 15px;
-      border: 2px solid #E2E8F0;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      outline: none;
-    }
-    .filter-input:focus { border-color: var(--green); }
-    .filter-btn {
-      padding: 10px 20px;
-      background: var(--navy);
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.15s;
-    }
-    .filter-btn:hover { background: var(--green); }
-    .filter-tag {
-      display: inline-block;
-      background: var(--light);
-      color: var(--navy);
-      padding: 6px 14px;
-      border-radius: 99px;
-      font-size: 0.8rem;
-      margin-right: 6px;
-    }
-
-    .dash-title {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1.5rem;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
+    .green-bar { background: var(--green); padding: 10px 28px; color: var(--white); font-family: 'Nunito', sans-serif; font-weight: 700; width: 100%; }
+    .main-content { flex: 1; padding: 40px 28px; max-width: 1200px; margin: 0 auto; width: 100%; }
+    .dash-title { font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.8rem; color: var(--navy); margin-bottom: 4px; }
     .dash-title span { color: var(--green); }
-    .dash-sub {
-      font-size: 0.85rem;
-      color: var(--gray);
-      margin-bottom: 24px;
-    }
+    .dash-sub { font-size: 0.9rem; color: var(--gray); margin-bottom: 24px; }
 
-    .reports-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 18px;
-    }
+    .filters-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .filter-input { flex: 1; min-width: 200px; padding: 10px 15px; border: 2px solid #E2E8F0; border-radius: 10px; font-size: 0.9rem; font-family: 'Inter', sans-serif; }
+    .filter-input:focus { outline: none; border-color: var(--green); }
 
-    .report-card {
-      background: var(--white);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 20px rgba(26,58,107,0.08);
-      border-left: 5px solid var(--orange);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .report-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(26,58,107,0.12); }
+    .reports-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+    .report-card { background: var(--white); border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(26,58,107,0.08); border-left: 5px solid var(--orange); transition: transform 0.2s, box-shadow 0.2s; }
+    .report-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(26,58,107,0.12); }
+    .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .report-id { font-family: 'Nunito', sans-serif; font-weight: 900; color: var(--navy); font-size: 0.95rem; }
+    .report-status { padding: 4px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; }
+    .report-status:nth-child(2) { background: #FEE2E2; color: #DC2626; }
+    .report-status.en-progreso { background: #DBEAFE; color: #2563EB; }
+    .report-status.resuelto { background: #DCFCE7; color: #16A34A; }
+    .report-motivo { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+    .report-categoria { font-size: 0.85rem; color: var(--gray); margin-bottom: 6px; }
+    .report-meta { font-size: 0.8rem; color: #9CA3AF; margin-bottom: 12px; }
+    .report-desc { font-size: 0.9rem; color: var(--gray); line-height: 1.5; margin-bottom: 16px; max-height: 60px; overflow: hidden; text-overflow: ellipsis; }
+    .report-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-status { padding: 6px 10px; border: 2px solid #E2E8F0; background: var(--white); border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+    .btn-status:hover { background: var(--light); }
+    .btn-status.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
 
-    .report-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-      gap: 10px;
-    }
-    .report-id {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      color: var(--navy);
-      font-size: 0.88rem;
-      background: var(--light);
-      padding: 3px 10px;
-      border-radius: 6px;
-    }
-    .report-status {
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 4px 10px;
-      border-radius: 99px;
-      background: #FEF3E0;
-      color: #92400E;
-    }
-    .report-status.resuelto {
-      background: #EBF5E0;
-      color: #3A7A0A;
-    }
-    .report-status.en-progreso {
-      background: #E8EEF9;
-      color: #1A3A6B;
-    }
-
-    .report-motivo {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 900;
-      font-size: 1.05rem;
-      color: var(--navy);
-      margin-bottom: 6px;
-      line-height: 1.3;
-    }
-    .report-categoria {
-      font-size: 0.75rem;
-      color: var(--gray);
-      margin-bottom: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .report-meta {
-      font-size: 0.78rem;
-      color: var(--gray);
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-    .report-desc {
-      font-size: 0.82rem;
-      color: var(--gray);
-      line-height: 1.55;
-      background: var(--light);
-      padding: 10px 12px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      max-height: 100px;
-      overflow: hidden;
-      position: relative;
-    }
-    .report-desc::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 20px;
-      background: linear-gradient(transparent, var(--light));
-    }
-
-    .report-actions {
-      display: flex;
-      gap: 8px;
-    }
-    .btn-status {
-      flex: 1;
-      padding: 8px 12px;
-      border: 2px solid #E2E8F0;
-      background: var(--white);
-      border-radius: 8px;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: border-color 0.15s, background 0.15s;
-      color: var(--gray);
-    }
-    .btn-status:hover { border-color: var(--green); color: var(--navy); }
-    .btn-status.active { background: var(--green); color: var(--white); border-color: var(--green); }
-
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--gray);
-    }
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 60px 20px; }
     .empty-state-icon { font-size: 3rem; margin-bottom: 12px; }
-    .empty-state p { font-size: 0.95rem; }
+    .empty-state p { color: var(--gray); font-size: 0.95rem; }
+
+    @media (max-width: 600px) {
+      .filters-bar { flex-direction: column; }
+      .reports-grid { grid-template-columns: 1fr; }
+      .main-content { padding: 24px 16px; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ══════════════════════════════
-       LOGIN SCREEN
-  ══════════════════════════════ -->
+  <!-- LOGIN SCREEN -->
   <div class="login-wrap" id="login-wrap">
-    <div class="login-deco deco-1"></div>
-    <div class="login-deco deco-2"></div>
-
     <div class="login-card">
-      <div class="login-logo">
-        <img src="logo.png" alt="Innova Schools"/>
-        <div class="login-logo-text">Innova Schools</div>
-      </div>
-
       <h1 class="login-title">Innova <span>Reports</span></h1>
-      <p class="login-sub">Panel de Control para Profesores y Equipo Directivo. Acceso seguro.</p>
-
       <div class="login-error" id="login-error">❌ Usuario o contraseña incorrecta</div>
-
       <form onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <label class="form-label">Usuario</label>
-          <input type="text" id="username" placeholder="Ingresa tu usuario" required/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Contraseña</label>
-          <input type="password" id="password" placeholder="Ingresa tu contraseña" required/>
-        </div>
-        <button class="btn-login" type="submit">Acceder 🔐</button>
+        <input type="text" class="field" id="username" placeholder="Usuario" autocomplete="off"/>
+        <input type="password" class="field" id="password" placeholder="Contraseña" autocomplete="off"/>
+        <button type="submit" class="btn-login">Entrar</button>
       </form>
     </div>
   </div>
 
-  <!-- ══════════════════════════════
-       DASHBOARD
-  ══════════════════════════════ -->
+  <!-- DASHBOARD -->
   <div class="dashboard-wrap" id="dashboard-wrap">
+    <div style="width: 100%; display: flex; flex-direction: column;">
+      <header>
+        <div class="header-logo">
+          <img src="logo.png" alt="Innova"/>
+          <span>Innova Reports</span>
+        </div>
+        <div class="header-right">
+          <span>👤 <span id="user-display">Staff</span></span>
+          <button class="logout-btn" onclick="handleLogout()">Cerrar sesión</button>
+        </div>
+      </header>
+      <div class="green-bar">📋 Panel de Control — Denuncias y Reportes</div>
+      
+      <div class="main-content">
+        <h2 class="dash-title">Denuncias <span>Pendientes</span> <span style="font-size: 0.5em; color: #9CA3AF; display: inline-block; background: var(--light); padding: 4px 12px; border-radius: 99px; margin-left: 8px;" id="count-badge">0</span></h2>
+        <p class="dash-sub">Revisa y gestiona todas las denuncias anónimas enviadas por estudiantes.</p>
 
-    <div class="dashboard-header">
-      <div class="dashboard-title">
-        <img src="logo.png" alt="Innova"/>
-        <h1>Innova Reports</h1>
-      </div>
-      <div style="display: flex; align-items: center;">
-        <div class="dashboard-user">
-          👤 <span id="user-display">innova</span>
-          <button class="btn-logout" onclick="handleLogout()">Cerrar sesión</button>
+        <div class="filters-bar">
+          <input type="text" class="filter-input" id="search-input" placeholder="🔍 Buscar por ubicación o motivo..." oninput="applyFilters()"/>
+          <select class="filter-input" id="status-filter" style="flex: 0 1 150px;" onchange="applyFilters()">
+            <option value="">Todos los estados</option>
+            <option value="Pendiente">Pendiente</option>
+            <option value="En progreso">En progreso</option>
+            <option value="Resuelto">Resuelto</option>
+          </select>
+        </div>
+
+        <div class="reports-grid" id="reports-grid">
+          <div class="empty-state">
+            <div class="empty-state-icon">⏳</div>
+            <p>Cargando denuncias...</p>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="dashboard-green-bar">📊 Panel de Control — Denuncias y Reportes</div>
-
-    <div class="dashboard-body">
-      <h2 class="dash-title">Denuncias <span>Pendientes</span> <span style="font-size: 0.6em; color: #9CA3AF; display: inline-block; background: var(--light); padding: 4px 12px; border-radius: 99px; margin-left: 8px;" id="count-badge">0</span></h2>
-      <p class="dash-sub">Revisa y gestiona todas las denuncias anónimas enviadas por estudiantes.</p>
-
-      <div class="filters-bar">
-        <input type="text" class="filter-input" id="search-input" placeholder="🔍 Buscar por ubicación o motivo..." oninput="applyFilters()">
-        <select class="filter-input" id="status-filter" style="flex: 0 1 150px;" onchange="applyFilters()">
-          <option value="">Todos los estados</option>
-          <option value="Pendiente">Pendiente</option>
-          <option value="En progreso">En progreso</option>
-          <option value="Resuelto">Resuelto</option>
-        </select>
-      </div>
-
-      <div id="filter-tags" style="margin-bottom: 16px;"></div>
-
-      <div class="reports-grid" id="reports-grid">
-        <div class="empty-state">
-          <div class="empty-state-icon">📭</div>
-          <p>No hay denuncias en este momento. ✨</p>
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <script>
-    // Credenciales correctas
     const VALID_USER = 'innova';
     const VALID_PASS = 'innova2026';
+    let allReports = [];
 
-    // Obtener reportes de localStorage
-    function getReportes() {
-      try {
-        return JSON.parse(localStorage.getItem('innovaReportsReportes') || '[]');
-      } catch (e) {
-        return [];
-      }
-    }
-
-    function getDenuncias() {
-      try {
-        return JSON.parse(localStorage.getItem('innovaReportsDenuncias') || '[]');
-      } catch (e) {
-        return [];
-      }
-    }
-
-    // Login
+    // ═══════════════════════════════════════════
+    // FUNCIONES DE LOGIN
+    // ═══════════════════════════════════════════
     function handleLogin(e) {
       e.preventDefault();
       const user = document.getElementById('username').value;
@@ -522,7 +142,6 @@
 
       if (user === VALID_USER && pass === VALID_PASS) {
         error.classList.remove('show');
-        // Guardar sesión en sessionStorage
         sessionStorage.setItem('staffLoggedIn', 'true');
         sessionStorage.setItem('staffUser', user);
         
@@ -536,7 +155,6 @@
       }
     }
 
-    // Logout
     function handleLogout() {
       sessionStorage.removeItem('staffLoggedIn');
       sessionStorage.removeItem('staffUser');
@@ -547,7 +165,9 @@
       document.getElementById('login-error').classList.remove('show');
     }
 
-    // Cargar denuncias (desde localStorage del estudiante)
+    // ═══════════════════════════════════════════
+    // FUNCIONES DE DENUNCIAS
+    // ═══════════════════════════════════════════
     function getDenuncias() {
       try {
         return JSON.parse(localStorage.getItem('innovaReportsDenuncias') || '[]');
@@ -556,31 +176,23 @@
       }
     }
 
-    function updateDenuncia(id, nuevoEstado) {
-      const lista = getDenuncias();
-      const idx = lista.findIndex(d => d.id === id);
-      if (idx !== -1) {
-        lista[idx].estado = nuevoEstado;
-        localStorage.setItem('innovaReportsDenuncias', JSON.stringify(lista));
-        loadReports();
-      }
-    }
-
-    function updateDenunciaSheets(id, nuevoEstado) {
-      // Esta función actualiza el estado en Google Sheets
-      // Por ahora, solo recarga para mostrar el cambio
-      // En una versión futura, se podría agregar un endpoint POST para actualizar Sheets
-      loadReports();
+    function saveDenuncias(lista) {
+      localStorage.setItem('innovaReportsDenuncias', JSON.stringify(lista));
     }
 
     function loadReports() {
-      const listaLocal = getDenuncias();
-      const listaReportes = getReportes();
-      const todosCombinados = [...listaLocal, ...listaReportes].sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+      const denuncias = getDenuncias();
+      allReports = denuncias.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
       
-      window.allReports = todosCombinados;
-      console.log('📋 Denuncias:', listaLocal.length, '| Reportes:', listaReportes.length);
+      console.log('✅ Denuncias cargadas:', allReports.length);
+      console.log('📋 Contenido:', allReports);
       
+      if (allReports.length === 0) {
+        document.getElementById('reports-grid').innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
+        document.getElementById('count-badge').textContent = '0';
+        return;
+      }
+
       applyFilters();
     }
 
@@ -588,13 +200,13 @@
       const searchTerm = document.getElementById('search-input').value.toLowerCase();
       const statusFilter = document.getElementById('status-filter').value;
       
-      let filtered = window.allReports || [];
+      let filtered = allReports;
       
       if (searchTerm) {
         filtered = filtered.filter(r => 
           r.motivo.toLowerCase().includes(searchTerm) || 
-          r.ubicacion.toLowerCase().includes(searchTerm) ||
-          r.lugar.toLowerCase().includes(searchTerm)
+          r.lugar.toLowerCase().includes(searchTerm) ||
+          r.id.toLowerCase().includes(searchTerm)
         );
       }
       
@@ -602,18 +214,20 @@
         filtered = filtered.filter(r => r.estado === statusFilter);
       }
 
-      if (filtered.length === 0) {
-        const grid = document.getElementById('reports-grid');
-        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay resultados.</p></div>';
+      renderReports(filtered);
+    }
+
+    function renderReports(denuncias) {
+      const grid = document.getElementById('reports-grid');
+      const badge = document.getElementById('count-badge');
+      
+      badge.textContent = allReports.length;
+
+      if (!denuncias || denuncias.length === 0) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🔍</div><p>No hay resultados.</p></div>';
         return;
       }
 
-      renderDenuncias(filtered);
-    }
-
-    function renderDenuncias(denuncias) {
-      const grid = document.getElementById('reports-grid');
-      
       grid.innerHTML = denuncias.map(r => {
         let fecha = r.fecha;
         if (typeof fecha === 'string') {
@@ -633,84 +247,37 @@
             <div class="report-meta">📍 ${r.lugar} · 📅 ${fecha}</div>
             <div class="report-desc">${r.descripcion}</div>
             <div class="report-actions">
-              <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Pendiente')">Pendiente</button>
-              <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'En progreso')">Progreso</button>
-              <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Resuelto')">Resuelto</button>
+              <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateReport('${r.id}', 'Pendiente')">Pendiente</button>
+              <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateReport('${r.id}', 'En progreso')">Progreso</button>
+              <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateReport('${r.id}', 'Resuelto')">Resuelto</button>
             </div>
           </div>
         `;
       }).join('');
     }
 
-    function updateDenunciaLocal(id, nuevoEstado) {
+    function updateReport(id, nuevoEstado) {
       const lista = getDenuncias();
       const idx = lista.findIndex(d => d.id === id);
       if (idx !== -1) {
         lista[idx].estado = nuevoEstado;
-        localStorage.setItem('innovaReportsDenuncias', JSON.stringify(lista));
-        loadReports();
+        saveDenuncias(lista);
         console.log(`✅ Denuncia ${id} actualizada a: ${nuevoEstado}`);
+        loadReports();
       }
     }
 
-    function renderDenuncias(denuncias) {
-      const grid = document.getElementById('reports-grid');
-      const badge = document.getElementById('count-badge');
-      
-      if (badge) badge.textContent = denuncias.length;
-      
-      if (!denuncias || denuncias.length === 0) {
-        grid.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay denuncias en este momento. ¡Qué buena convivencia! ✨</p></div>';
-        return;
-      }
-
-      grid.innerHTML = denuncias.map(r => {
-        let fecha = r.fecha;
-        if (fecha instanceof Date) {
-          fecha = fecha.toLocaleDateString('es-PE');
-        } else if (typeof fecha === 'string') {
-          fecha = new Date(fecha).toLocaleDateString('es-PE', { day: 'short', month: 'short', year: 'numeric' });
-        }
-
-        const statusClass = r.estado === 'Resuelto' ? 'resuelto' : r.estado === 'En progreso' ? 'en-progreso' : '';
-        
-        return `
-          <div class="report-card">
-            <div class="report-header">
-              <span class="report-id">#${r.id}</span>
-              <span class="report-status ${statusClass}">${r.estado}</span>
-            </div>
-            <div class="report-motivo">${r.motivo}</div>
-            <div class="report-categoria">📌 ${r.categoria}</div>
-            <div class="report-meta">📍 ${r.lugar} · 📅 ${fecha}</div>
-            <div class="report-desc">${r.descripcion}</div>
-            <div class="report-actions">
-              <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Pendiente')">Pendiente</button>
-              <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'En progreso')">Progreso</button>
-              <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Resuelto')">Resuelto</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    // Verificar si ya está logueado
+    // ═══════════════════════════════════════════
+    // VERIFICAR LOGIN AL CARGAR
+    // ═══════════════════════════════════════════
     window.addEventListener('load', () => {
       if (sessionStorage.getItem('staffLoggedIn') === 'true') {
-        const user = sessionStorage.getItem('staffUser') || 'innova';
         document.getElementById('login-wrap').style.display = 'none';
         document.getElementById('dashboard-wrap').classList.add('show');
-        document.getElementById('user-display').textContent = user;
+        document.getElementById('user-display').textContent = sessionStorage.getItem('staffUser');
         loadReports();
       }
     });
-
-    // Refrescar denuncias cada 5 segundos (opcional)
-    setInterval(() => {
-      if (sessionStorage.getItem('staffLoggedIn') === 'true') {
-        loadReports();
-      }
-    }, 5000);
   </script>
 
 </body>
