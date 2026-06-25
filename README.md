@@ -246,8 +246,8 @@ Contraseña: innova2026
 
 ## 👥 Autores
 
-- **Desarrollo y Diseño**: [Tu nombre aquí]
-- **Concepto**: Innova Schools Innovation Program (IP)
+- **Integrantes**: Milton Coronado, Fabrizzio Victorio, Abigail Salas, Axel Moran, Sabrina Leon, Fernanda Chavez
+- **Concepto**: Grupo 5
 - **Inspiración**: Innova Family (diseño UI/UX)
 
 ---
@@ -262,7 +262,7 @@ MIT License — Libre para usar, modificar y distribuir
 
 Para sugerencias, reportes de bugs o mejoras:
 - 📧 Crea un Issue en GitHub
-- 💬 Contacta al equipo de Innova Schools
+- 💬 Contacta al equipo de Innova Reports
 
 ---
 
