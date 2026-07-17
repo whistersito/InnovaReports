@@ -894,7 +894,7 @@
     function validateStep3() {
       const val = document.getElementById('descripcion-input').value.trim();
       reportState.descripcion = val;
-      document.getElementById('btn-submit').disabled = val.length < 5;
+      document.getElementById('btn-submit').disabled = val.length < 10;
     }
 
     function goStep(n) {
