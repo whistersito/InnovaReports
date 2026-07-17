@@ -330,13 +330,38 @@
       flex-shrink: 0;
     }
 
+    @media (max-width: 768px) {
+      .sidebar { width: 160px; padding-top: 12px; }
+      .sidebar-scroll { gap: 6px; }
+      .nav-item { padding: 10px 12px; }
+      .nav-label { font-size: 0.75rem; }
+      .nav-icon { font-size: 1.2rem; }
+      .donqui-img { width: 70px; }
+      .donqui-bubble { max-width: 150px; font-size: 0.7rem; padding: 10px 12px; }
+      .panel { padding: 20px; }
+      .report-form-wrap { padding: 16px; }
+      .option-grid { grid-template-columns: 1fr; gap: 12px; }
+      .option-card { padding: 14px; }
+      .option-icon { font-size: 2rem; }
+      .step-actions { gap: 8px; flex-direction: column; }
+      .btn { padding: 10px 16px; font-size: 0.9rem; }
+      .field { padding: 10px 12px; font-size: 0.9rem; }
+      .success-icon { font-size: 3rem; }
+      .success-title { font-size: 1.3rem; }
+    }
+
     @media (max-width: 600px) {
-      .sidebar { width: 180px; }
-      .donqui-img { width: 80px; }
-      .donqui-bubble { max-width: 170px; font-size: 0.75rem; }
-      .filters-bar { flex-direction: column; }
-      .filter-input { min-width: auto; }
-      main { padding: 24px 16px 40px; }
+      .header { padding: 0 12px; }
+      .header-right { gap: 8px; font-size: 0.75rem; }
+      .sidebar { width: 140px; }
+      .panel { padding: 16px 12px; }
+      .option-grid { gap: 10px; }
+      .option-card { padding: 12px; }
+      .option-title { font-size: 0.9rem; }
+      .option-desc { font-size: 0.75rem; }
+      .btn { padding: 9px 14px; font-size: 0.85rem; }
+      .field { font-size: 0.9rem; padding: 9px 10px; }
+      .success-screen { padding: 20px 16px; }
     }
 
     /* Transiciones suaves */
@@ -701,6 +726,12 @@
             <p class="report-question">¿Qué ocurrió? <span class="light">(Cuéntanos todo)</span></p>
             <p class="report-hint">Brinda todos los detalles que puedas. Tu identidad permanece anónima.</p>
             <textarea class="field" id="descripcion-input" placeholder="Escribe aquí lo que ocurrió..." oninput="validateStep3()"></textarea>
+            
+            <div style="margin-top: 16px; border-top: 1px solid #E2E8F0; padding-top: 16px;">
+              <p class="report-question" style="font-size: 0.95rem;">📸 Adjuntar Imagen <span class="light">(Opcional)</span></p>
+              <input type="file" accept="image/*" id="image-input" onchange="handleImageUpload(event)" style="padding: 8px 12px; border: 2px dashed var(--green); border-radius: 8px; cursor: pointer; width: 100%; font-size: 0.85rem; font-family: 'Inter', sans-serif;"/>
+              <div id="image-preview-container" style="margin-top: 12px;"></div>
+            </div>
 
             <div class="step-actions">
               <button class="btn btn-ghost" onclick="goStep(2)">← Atrás</button>
@@ -825,7 +856,7 @@
     // ════════════════════════════════════
     // FORMULARIO DE DENUNCIAS — lógica
     // ════════════════════════════════════
-    let reportState = { motivo: null, motivoDetalle: '', lugar: '', descripcion: '' };
+    let reportState = { motivo: null, motivoDetalle: '', lugar: '', descripcion: '', imagen: null, imagenPreview: null };
 
     function selectMotivo(el) {
       document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
@@ -892,6 +923,32 @@
       localStorage.setItem('innovaReportsDenuncias', JSON.stringify(lista));
     }
 
+    function handleImageUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result;
+        reportState.imagen = base64;
+        
+        const preview = document.getElementById('image-preview-container');
+        preview.innerHTML = `
+          <div style="position: relative; border-radius: 8px; overflow: hidden; max-height: 200px; background: #f0f0f0;">
+            <img src="${base64}" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;"/>
+            <button onclick="removeImage()" style="position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6); color: white; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 14px;">✕</button>
+          </div>
+        `;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeImage() {
+      reportState.imagen = null;
+      document.getElementById('image-input').value = '';
+      document.getElementById('image-preview-container').innerHTML = '';
+    }
+
     function submitDenuncia() {
       const code = generateCode();
       const denuncia = {
@@ -900,8 +957,10 @@
         categoria: reportState.motivo,
         lugar: reportState.lugar,
         descripcion: reportState.descripcion,
+        imagen: reportState.imagen || null,
         fecha: new Date().toISOString(),
-        estado: 'Pendiente'
+        estado: 'Pendiente',
+        falso: false
       };
 
       // Guardar en localStorage
@@ -917,12 +976,14 @@
     }
 
     function resetDenunciaForm() {
-      reportState = { motivo: null, motivoDetalle: '', lugar: '', descripcion: '' };
+      reportState = { motivo: null, motivoDetalle: '', lugar: '', descripcion: '', imagen: null, imagenPreview: null };
       document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
       document.getElementById('otro-input').value = '';
       document.getElementById('otro-input-wrap').classList.remove('show');
       document.getElementById('lugar-input').value = '';
       document.getElementById('descripcion-input').value = '';
+      document.getElementById('image-input').value = '';
+      document.getElementById('image-preview-container').innerHTML = '';
       document.getElementById('btn-step1-next').disabled = true;
       document.getElementById('btn-step2-next').disabled = true;
       document.getElementById('btn-submit').disabled = true;

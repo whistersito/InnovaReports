@@ -409,6 +409,42 @@
     }
     .empty-state-icon { font-size: 3rem; margin-bottom: 12px; }
     .empty-state p { font-size: 0.95rem; }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 768px) {
+      .header { flex-direction: column; height: auto; gap: 8px; padding: 12px; }
+      .header-right { flex-direction: column; gap: 6px; font-size: 0.8rem; }
+      .logout-btn { padding: 5px 10px; font-size: 0.75rem; }
+      .green-bar { padding: 8px 16px; font-size: 0.85rem; }
+      .main-content { padding: 20px 16px; }
+      .dash-title { font-size: 1.4rem; }
+      .dash-sub { font-size: 0.85rem; }
+      .filters-bar { flex-direction: column; gap: 8px; }
+      .filter-input { min-width: auto; font-size: 0.85rem; padding: 8px 10px; }
+      .reports-grid { grid-template-columns: 1fr; gap: 16px; }
+      .report-card { padding: 16px; }
+      .report-motivo { font-size: 0.95rem; }
+      .report-desc { max-height: 50px; font-size: 0.85rem; }
+      .report-actions { flex-wrap: wrap; gap: 6px; }
+      .btn-status { padding: 5px 8px; font-size: 0.7rem; }
+    }
+
+    @media (max-width: 600px) {
+      .login-card { padding: 28px 16px; }
+      .login-title { font-size: 1.3rem; }
+      .field { font-size: 0.85rem; padding: 8px 10px; margin-bottom: 10px; }
+      .btn-login { padding: 10px; font-size: 0.9rem; }
+      .header { padding: 8px; }
+      .header-logo { gap: 6px; }
+      .header-logo img { height: 28px; }
+      .header-logo span { font-size: 0.8rem; }
+      .main-content { padding: 16px 12px; max-width: 100%; }
+      .dash-title { font-size: 1.2rem; margin-bottom: 2px; }
+      .dash-title span { font-size: 0.7rem; padding: 2px 8px; }
+      .filters-bar { margin-bottom: 16px; }
+      .report-actions { gap: 4px; }
+      .btn-status { padding: 4px 6px; font-size: 0.65rem; }
+    }
   </style>
 </head>
 <body>
@@ -550,6 +586,59 @@
       }
     }
 
+    function showConfirmDialog(titulo, mensaje, onConfirm) {
+      if (confirm(`${titulo}\n\n${mensaje}\n\n¿Seguro de que deseas continuar?`)) {
+        onConfirm();
+      }
+    }
+
+    function markAsFalse(id) {
+      showConfirmDialog('⚠️ Marcar como Falsa', 'Esta denuncia será marcada como falsa.', () => {
+        const lista = getDenuncias();
+        const idx = lista.findIndex(d => d.id === id);
+        if (idx !== -1) {
+          lista[idx].falso = true;
+          lista[idx].estado = 'Falsa';
+          localStorage.setItem('innovaReportsDenuncias', JSON.stringify(lista));
+          loadReports();
+          console.log(`✅ Denuncia ${id} marcada como falsa`);
+        }
+      });
+    }
+
+    function deleteDenuncia(id) {
+      showConfirmDialog('🗑️ Eliminar Denuncia', 'Esta acción no se puede deshacer.', () => {
+        const lista = getDenuncias();
+        const filtered = lista.filter(d => d.id !== id);
+        localStorage.setItem('innovaReportsDenuncias', JSON.stringify(filtered));
+        loadReports();
+        console.log(`✅ Denuncia ${id} eliminada`);
+      });
+    }
+
+    function openImageModal(imagenSrc) {
+      const modal = document.createElement('div');
+      modal.style.cssText = `
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.8); z-index: 9999;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+      `;
+      modal.innerHTML = `
+        <div style="position: relative; max-width: 90vw; max-height: 90vh;">
+          <img src="${imagenSrc}" style="max-width: 100%; max-height: 100%; border-radius: 12px;"/>
+          <button onclick="this.parentElement.parentElement.remove()" style="
+            position: absolute; top: 12px; right: 12px;
+            background: rgba(0,0,0,0.7); color: white;
+            border: none; width: 40px; height: 40px; border-radius: 50%;
+            cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center;
+          ">✕</button>
+        </div>
+      `;
+      modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+      document.body.appendChild(modal);
+    }
+
     function loadReports() {
       const listaLocal = getDenuncias();
       // sólo denuncias ahora
@@ -623,10 +712,13 @@
             <div class="report-categoria">📌 ${categoria}</div>
             <div class="report-meta">📍 ${lugar} · 📅 ${fecha}</div>
             <div class="report-desc">${r.descripcion}</div>
+            ${r.imagen ? `<div style="margin-top: 12px; border-radius: 8px; overflow: hidden; max-height: 180px; background: #f0f0f0;"><img src="${r.imagen}" style="width: 100%; height: auto; max-height: 180px; object-fit: cover; cursor: pointer;" onclick="openImageModal('${r.imagen}')"/></div>` : ''}
             <div class="report-actions">
               <button class="btn-status ${r.estado === 'Pendiente' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Pendiente')">Pendiente</button>
               <button class="btn-status ${r.estado === 'En progreso' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'En progreso')">Progreso</button>
               <button class="btn-status ${r.estado === 'Resuelto' ? 'active' : ''}" onclick="updateDenunciaLocal('${r.id}', 'Resuelto')">Resuelto</button>
+              <button class="btn-status" style="background: #FEE2E2; color: #DC2626; ${r.falso ? 'opacity: 0.5;' : ''}" onclick="markAsFalse('${r.id}')" title="Marcar como falsa">🚩 Falsa</button>
+              <button class="btn-status" style="background: #FCE7F3; color: #BE185D;" onclick="deleteDenuncia('${r.id}')" title="Eliminar">🗑️ Eliminar</button>
             </div>
           </div>
         `;
